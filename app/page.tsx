@@ -36,7 +36,7 @@ export default function LandingPage() {
 
   const headerRef = useRef<HTMLElement>(null)
 
-  // Form state
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -58,11 +58,10 @@ export default function LandingPage() {
     setFormStep((prev) => prev - 1)
   }
 
-  // Animated values for parallax effects
+
   const heroTextY = useTransform(scrollYProgress, [0, 0.2], [0, -50])
   const heroOpacity = useTransform(scrollYProgress, [0, 0.2], [1, 0.5])
 
-  // Header animation based on scroll
   const headerBg = useTransform(scrollYProgress, [0, 0.1], ["rgba(0, 0, 0, 0)", "rgba(0, 0, 0, 0.8)"])
 
   useEffect(() => {
@@ -99,18 +98,18 @@ export default function LandingPage() {
     },
   }
 
-  // Close form
+
   const closeForm = () => {
     setIsFormOpen(false)
-    setTimeout(() => setFormStep(1), 500) // Reset form step after closing animation completes
+    setTimeout(() => setFormStep(1), 500) 
   }
 
   return (
     <div className="relative min-h-screen bg-black text-white overflow-hidden">
-      {/* Animated Background */}
+
       <ParticlesBackground />
 
-      {/* Animated Gradients */}
+ 
       <div className="fixed inset-0 z-0 overflow-hidden">
         <div className="absolute -top-[40%] -left-[20%] w-[70%] h-[70%] rounded-full bg-green-500/10 blur-[150px] animate-blob"></div>
         <div className="absolute top-[60%] -right-[20%] w-[60%] h-[60%] rounded-full bg-green-500/10 blur-[150px] animate-blob animation-delay-2000"></div>
@@ -118,7 +117,7 @@ export default function LandingPage() {
         <div className="absolute -bottom-[10%] left-[10%] w-[50%] h-[50%] rounded-full bg-green-700/5 blur-[150px] animate-blob animation-delay-6000"></div>
       </div>
 
-      {/* Header */}
+
       <motion.header
         ref={headerRef}
         className="fixed top-0 left-0 right-0 z-50 px-6 py-4 flex items-center justify-between backdrop-blur-md transition-all duration-300 border-b border-white/10"
@@ -135,7 +134,7 @@ export default function LandingPage() {
           </div>
         </motion.div>
 
-        {/* Desktop Navigation */}
+
         <nav className="hidden md:flex items-center space-x-8">
           {["Serviços", "Resultados", "Processo", "Contato"].map((item, index) => (
             <motion.div
@@ -155,7 +154,7 @@ export default function LandingPage() {
           ))}
         </nav>
 
-        {/* Mobile Menu Button */}
+
         <div className="md:hidden">
           <Button variant="ghost" size="icon" onClick={() => setMobileMenuOpen(!mobileMenuOpen)} className="text-white">
             <Menu className="w-6 h-6" />
@@ -178,7 +177,7 @@ export default function LandingPage() {
         </motion.div>
       </motion.header>
 
-      {/* Mobile Navigation Menu */}
+
       <AnimatePresence>
         {mobileMenuOpen && (
           <motion.div
@@ -213,7 +212,7 @@ export default function LandingPage() {
         )}
       </AnimatePresence>
 
-      {/* Hero Section */}
+
       <section className="relative z-10 pt-32 pb-32 px-6 md:px-10 lg:px-20 flex flex-col items-center justify-center min-h-[100vh]">
         <motion.div
           initial="hidden"
@@ -272,7 +271,7 @@ export default function LandingPage() {
         </motion.div>
       </section>
 
-      {/* Services Section */}
+   
       <section id="serviços" className="relative z-10 py-20 px-6 md:px-10 lg:px-20">
         <motion.div
           initial="hidden"
@@ -298,7 +297,7 @@ export default function LandingPage() {
           variants={staggerContainer}
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8"
         >
-          {/* Service Cards with improved animations */}
+      
           {[
             {
               icon: <Zap className="w-8 h-8 text-white" />,
@@ -349,7 +348,6 @@ export default function LandingPage() {
         </motion.div>
       </section>
 
-      {/* Results Section with Counter Animation */}
       <section id="resultados" className="relative z-10 py-20 px-6 md:px-10 lg:px-20 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-green-900/10 to-black/50 z-0"></div>
 
@@ -376,7 +374,7 @@ export default function LandingPage() {
           variants={staggerContainer}
           className="relative z-10 grid grid-cols-1 md:grid-cols-3 gap-8 mb-16"
         >
-          {/* Stats with Counter Animation */}
+  
           <motion.div
             variants={fadeInUp}
             whileHover={{ scale: 1.05, transition: { duration: 0.3 } }}
@@ -423,7 +421,7 @@ export default function LandingPage() {
           variants={fadeInUp}
           className="relative z-10 flex flex-wrap justify-center gap-6"
         >
-          {/* Badges with improved animations */}
+         
           {[
             { icon: <CheckCircle className="w-5 h-5 text-green-400 mr-2" />, text: "Especialistas em Conversão" },
             { icon: <CheckCircle className="w-5 h-5 text-green-400 mr-2" />, text: "Estratégias Personalizadas" },
@@ -449,7 +447,7 @@ export default function LandingPage() {
         </motion.div>
       </section>
 
-      {/* Process Section */}
+
       <section id="processo" className="relative z-10 py-20 px-6 md:px-10 lg:px-20">
         <motion.div
           initial="hidden"
@@ -474,7 +472,7 @@ export default function LandingPage() {
           variants={staggerContainer}
           className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-4 relative"
         >
-          {/* Animated connector line */}
+         
           <div className="absolute top-1/2 left-0 w-full h-0.5 bg-gradient-to-r from-green-500/50 via-green-700/50 to-green-500/50 hidden md:block">
             <motion.div
               initial={{ scaleX: 0 }}
@@ -485,7 +483,7 @@ export default function LandingPage() {
             />
           </div>
 
-          {/* Step 1 */}
+
           <motion.div
             variants={fadeInUp}
             whileHover={{ y: -10, transition: { duration: 0.3 } }}
@@ -507,7 +505,7 @@ export default function LandingPage() {
             </div>
           </motion.div>
 
-          {/* Step 2 */}
+      
           <motion.div
             variants={fadeInUp}
             whileHover={{ y: -10, transition: { duration: 0.3 } }}
@@ -529,7 +527,6 @@ export default function LandingPage() {
             </div>
           </motion.div>
 
-          {/* Step 3 */}
           <motion.div
             variants={fadeInUp}
             whileHover={{ y: -10, transition: { duration: 0.3 } }}
@@ -553,7 +550,7 @@ export default function LandingPage() {
         </motion.div>
       </section>
 
-      {/* CTA Section */}
+
       <section id="contato" className="relative z-10 py-20 px-6 md:px-10 lg:px-20">
         <div className="absolute inset-0 bg-gradient-to-t from-green-900/20 to-black/50 z-0"></div>
 
@@ -597,7 +594,6 @@ export default function LandingPage() {
         </motion.div>
       </section>
 
-      {/* Footer */}
       <footer className="relative z-10 py-10 px-6 md:px-10 lg:px-20 border-t border-white/10">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center">
           <div className="mb-6 md:mb-0">
@@ -623,7 +619,7 @@ export default function LandingPage() {
         </div>
       </footer>
 
-      {/* Multi-step Contact Form Modal */}
+ 
       {isFormOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
           <div className="absolute inset-0 bg-black/80 backdrop-blur-sm" onClick={closeForm}></div>
@@ -648,7 +644,7 @@ export default function LandingPage() {
                 </Button>
               </div>
 
-              {/* Progress Indicator */}
+
               <div className="w-full bg-white/10 h-1 rounded-full mb-8 overflow-hidden">
                 <motion.div
                   initial={{ width: "0%" }}

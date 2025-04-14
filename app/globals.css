@@ -78,3 +78,288 @@
 html {
   scroll-behavior: smooth;
 }
+
+/* Animated button border */
+@keyframes rotate-border {
+  0% {
+    stroke-dashoffset: 0;
+  }
+  100% {
+    stroke-dashoffset: 135;
+  }
+}
+
+/* Custom animations */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-in-scale {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes fade-in-right {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes grow-x {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+/* Border animation */
+@keyframes border-rotate {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.animate-border-rotate {
+  background-size: 200% 200%;
+  animation: border-rotate 4s linear infinite;
+}
+
+.animate-fade-in {
+  animation: fade-in 0.5s ease-out forwards;
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up 0.6s ease-out forwards;
+}
+
+.animate-fade-in-scale {
+  animation: fade-in-scale 0.5s ease-out forwards;
+}
+
+.animate-fade-in-right {
+  animation: fade-in-right 0.3s ease-out forwards;
+}
+
+.animate-grow-x {
+  animation: grow-x 1.5s ease-in-out forwards;
+}
+
+/* Vibrant gradient text effects */
+.text-gradient-primary {
+  background: linear-gradient(90deg, #c3ffab 0%, green 50%, white 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  background-size: 200% auto;
+}
+
+.text-gradient-white-green {
+  background: linear-gradient(90deg, green 0%, #ffffff 50%, green 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.text-gradient-tudo {
+  background: linear-gradient(90deg, #c3ffab 0%, #ffffff 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  text-shadow: 0 0 30px rgba(16, 185, 129, 0.4);
+  letter-spacing: -0.02em;
+}
+
+@keyframes gradient-shift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* Metallic text effect */
+.text-metallic {
+  background: linear-gradient(90deg, #ffffff 0%, #f0f0f0 25%, #ffffff 50%, #e0e0e0 75%, #ffffff 100%);
+  background-size: 200% auto;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shine 3s linear infinite;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+}
+
+/* Aceternity UI animations */
+@keyframes spotlight {
+  0% {
+    opacity: 0;
+    transform: translate(-72%, -62%) scale(0.5);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(-50%, -40%) scale(1);
+  }
+}
+
+.animate-spotlight {
+  animation: spotlight 2s ease 0.5s 1 forwards;
+}
+
+@keyframes shimmer {
+  from {
+    backgroundPosition: 0% 0%;
+  }
+  to {
+    backgroundPosition: -200% 0%;
+  }
+}
+
+.animate-shimmer {
+  animation: shimmer 2s linear infinite;
+  background-size: 200% 100%;
+  background-image: linear-gradient(
+    to right,
+    transparent 0%,
+    rgba(16, 185, 129, 0.4) 25%,
+    transparent 50%,
+    rgba(16, 185, 129, 0.4) 75%,
+    transparent 100%
+  );
+}
+
+.animate-gradient-text {
+  animation: gradient-shift 3s ease infinite;
+  background-size: 200% auto;
+}
+
+.group:hover .group-hover\:animate-shimmer {
+  animation: shimmer 2s linear infinite;
+}
+
+/* Animated border for service cards */
+@keyframes border-fill {
+  0% {
+    width: 0;
+  }
+  100% {
+    width: 100%;
+  }
+}
+
+@keyframes border-fill-vertical {
+  0% {
+    height: 0;
+  }
+  100% {
+    height: 100%;
+  }
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 0.2;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0.8;
+    transform: scale(1.5);
+  }
+}
+
+@keyframes flowing-line {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.flowing-line {
+  background: linear-gradient(90deg, transparent, rgba(16, 185, 129, 0.8), transparent);
+  background-size: 200% 100%;
+  animation: flowing-line 8s linear infinite;
+}
+
+.process-dots-connector::before,
+.process-dots-connector::after {
+  content: "";
+  position: absolute;
+  width: 0.75rem;
+  height: 0.75rem;
+  background-color: rgba(16, 185, 129, 0.8);
+  border-radius: 50%;
+  z-index: 1;
+}
+
+.process-dots-connector::before {
+  top: 0;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.process-dots-connector::after {
+  bottom: 0;
+  left: 50%;
+  transform: translate(-50%, 50%);
+}
+
+@media (min-width: 768px) {
+  .process-dots-connector::before,
+  .process-dots-connector::after {
+    top: 50%;
+    height: 0.75rem;
+  }
+
+  .process-dots-connector::before {
+    left: 0;
+    transform: translate(-50%, -50%);
+  }
+
+  .process-dots-connector::after {
+    right: 0;
+    left: auto;
+    transform: translate(50%, -50%);
+  }
+}

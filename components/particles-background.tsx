@@ -25,7 +25,7 @@ export default function ParticlesBackground() {
     let animationFrameId: number
     const particles: Particle[] = []
 
-  
+    // Set canvas size
     const resizeCanvas = () => {
       canvas.width = window.innerWidth
       canvas.height = window.innerHeight
@@ -34,9 +34,9 @@ export default function ParticlesBackground() {
     window.addEventListener("resize", resizeCanvas)
     resizeCanvas()
 
-
+    // Create particles
     const createParticles = () => {
-      const particleCount = Math.floor(window.innerWidth / 20) 
+      const particleCount = Math.floor(window.innerWidth / 20) // Responsive particle count
 
       for (let i = 0; i < particleCount; i++) {
         particles.push({
@@ -53,11 +53,11 @@ export default function ParticlesBackground() {
 
     createParticles()
 
-
+    // Animation
     const animate = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height)
 
-  
+      // Update and draw particles
       for (let i = 0; i < particles.length; i++) {
         const p = particles[i]
 
@@ -68,7 +68,7 @@ export default function ParticlesBackground() {
         if (p.x < 0 || p.x > canvas.width) p.speedX *= -1
         if (p.y < 0 || p.y > canvas.height) p.speedY *= -1
 
-     
+        // Draw particle
         ctx.beginPath()
         ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2)
         ctx.fillStyle =
@@ -78,14 +78,14 @@ export default function ParticlesBackground() {
             .padStart(2, "0")
         ctx.fill()
 
-  
+        // Draw connections
         connectParticles(p, particles)
       }
 
       animationFrameId = requestAnimationFrame(animate)
     }
 
-
+    // Draw connections between particles
     const connectParticles = (p1: Particle, particles: Particle[]) => {
       const connectionRadius = 100
 

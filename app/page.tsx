@@ -3,15 +3,13 @@
 import type React from "react"
 
 import { useState, useEffect, useRef } from "react"
+import { HoverBorderGradient, HoverBorderGradientNavbar } from "@/components/ui/hover-border-gradient"
+
+import Image from "next/image"
 import Link from "next/link"
-import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion"
 import {
   ChevronDown,
   ArrowRight,
-  Zap,
-  PenTool,
-  TrendingUp,
-  Globe,
   CheckCircle,
   X,
   Menu,
@@ -20,23 +18,33 @@ import {
   Phone,
   Building,
   MessageSquare,
+  Brain,
+  ThumbsUp,
+  BarChart3,
+  Globe2,
+  Users2,
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { CountUp } from "@/components/count-up"
 import ParticlesBackground from "@/components/particles-background"
+import AnimatedButton from "@/components/animated-button"
+import { AnimatedGradientText } from "@/components/aceternity/animated-gradient-text"
+import { SpotlightCard } from "@/components/aceternity/spotlight-card"
+import ServiceCard from "@/components/service-card"
+import ProcessJourney from "@/components/process-journey"
+import ExclusiveCta from "@/components/exclusive-cta"
+import AchievementShowcase from "@/components/achievement-showcase"
 
 export default function LandingPage() {
   const [isFormOpen, setIsFormOpen] = useState(false)
   const [formStep, setFormStep] = useState(1)
   const [scrollY, setScrollY] = useState(0)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-  const { scrollYProgress } = useScroll()
-
   const headerRef = useRef<HTMLElement>(null)
 
-
+  // Form state
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -58,26 +66,19 @@ export default function LandingPage() {
     setFormStep((prev) => prev - 1)
   }
 
-
-  const heroTextY = useTransform(scrollYProgress, [0, 0.2], [0, -50])
-  const heroOpacity = useTransform(scrollYProgress, [0, 0.2], [1, 0.5])
-
-  const headerBg = useTransform(scrollYProgress, [0, 0.1], ["rgba(0, 0, 0, 0)", "rgba(0, 0, 0, 0.8)"])
-
+  // Header animation based on scroll
   useEffect(() => {
     const handleScroll = () => {
       setScrollY(window.scrollY)
+      if (headerRef.current) {
+        const opacity = Math.min(scrollY / 200, 0.8)
+        headerRef.current.style.background = `rgba(0, 0, 0, ${opacity})`
+      }
     }
 
     window.addEventListener("scroll", handleScroll)
     return () => window.removeEventListener("scroll", handleScroll)
-  }, [])
-
-  useEffect(() => {
-    if (headerRef.current) {
-      headerRef.current.style.background = headerBg.get()
-    }
-  }, [scrollY, headerBg])
+  }, [scrollY])
 
   const fadeInUp = {
     hidden: { opacity: 0, y: 60 },
@@ -98,18 +99,62 @@ export default function LandingPage() {
     },
   }
 
-
+  // Close form
   const closeForm = () => {
     setIsFormOpen(false)
-    setTimeout(() => setFormStep(1), 500) 
+    setTimeout(() => setFormStep(1), 500) // Reset form step after closing animation completes
   }
+
+  // Service cards data
+  const serviceCards = [
+    {
+      icon: <Brain className="w-10 h-10 text-white" />,
+      iconBgColor: "bg-red-600",
+      title: "Aumente A Retenção Dos Seus Clientes Por No Mínimo 6 Meses",
+      description: "O Lucro mora aqui, se você não tem LTV alto está fadado a quebrar.",
+    },
+    {
+      icon: <ThumbsUp className="w-10 h-10 text-white" />,
+      iconBgColor: "bg-green-600",
+      title: "Aumente Sua Conversão Em Pelo Menos 30% Em 60 Dias",
+      description:
+        "Com o público qualificado, um copywriting cirúrgico é essencial para aumentar comprovadamente sua conversão.",
+    },
+    {
+      icon: <BarChart3 className="w-10 h-10 text-white" />,
+      iconBgColor: "bg-blue-600",
+      title: "Escale Seu Tráfego Com ROI Positivo",
+      description: "Um fator crucial para alavancar o seu projeto, é mostrar o seu produto para o público certo.",
+    },
+    {
+      icon: <Globe2 className="w-10 h-10 text-white" />,
+      iconBgColor: "bg-purple-600",
+      title: "Site Otimizado Para Conversão",
+      description:
+        "Análise e criação de sites validados, que aumentam a retenção do público e comprovadamente melhoram a conversão.",
+    },
+    {
+      icon: <Users2 className="w-10 h-10 text-white" />,
+      iconBgColor: "bg-amber-600",
+      title: "Marketing Estratégico Para Crescimento Acelerado",
+      description:
+        "Receba leads quentes e qualificados, através da Metodologia Sofistic. Testada e comprovada para potencializar seu crescimento.",
+    },
+    {
+      icon: <Users2 className="w-10 h-10 text-white" />,
+      iconBgColor: "bg-amber-600",
+      title: "Criação de Funil de Venda",
+      description:
+        "Você não está contratando apenas um serviço de Tráfego Pago, mas sim a criação de uma máquina de vendas.",
+    },
+  ]
 
   return (
     <div className="relative min-h-screen bg-black text-white overflow-hidden">
-
+      {/* Animated Background */}
       <ParticlesBackground />
 
- 
+      {/* Animated Gradients */}
       <div className="fixed inset-0 z-0 overflow-hidden">
         <div className="absolute -top-[40%] -left-[20%] w-[70%] h-[70%] rounded-full bg-green-500/10 blur-[150px] animate-blob"></div>
         <div className="absolute top-[60%] -right-[20%] w-[60%] h-[60%] rounded-full bg-green-500/10 blur-[150px] animate-blob animation-delay-2000"></div>
@@ -117,489 +162,285 @@ export default function LandingPage() {
         <div className="absolute -bottom-[10%] left-[10%] w-[50%] h-[50%] rounded-full bg-green-700/5 blur-[150px] animate-blob animation-delay-6000"></div>
       </div>
 
-
-      <motion.header
-        ref={headerRef}
-        className="fixed top-0 left-0 right-0 z-50 px-6 py-4 flex items-center justify-between backdrop-blur-md transition-all duration-300 border-b border-white/10"
-        style={{ backgroundColor: headerBg }}
-      >
-        <motion.div
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.5 }}
-          className="flex items-center"
+      <div className="w-full flex items-center justify-center">
+        {/* Header - Circular with glow effect */}
+        <header
+          ref={headerRef}
+          className="w-[70%] z-50 px-6 py-4 flex items-center justify-between transition-all duration-300 rounded-full mx-4 mt-8 border border-green-500/20"
+          style={{
+            boxShadow: "0 0 20px rgba(16, 185, 129, 0.2), inset 0 0 20px rgba(16, 185, 129, 0.1)",
+            background: "linear-gradient(90deg, rgba(0,0,0,0.9) 0%, rgba(16,185,129,0.1) 50%, rgba(0,0,0,0.9) 100%)",
+          }}
         >
-          <div className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-green-400">
-            SOFISTIC
+          <div
+            className="flex items-center opacity-0 animate-fade-in"
+            style={{ animationDelay: "0.2s", animationFillMode: "forwards" }}
+          >
+            <Image src="/images/logo.png" alt="Sofistic Midia" width={150} height={50} className="h-10 w-auto" />
           </div>
-        </motion.div>
 
-
-        <nav className="hidden md:flex items-center space-x-8">
-          {["Serviços", "Resultados", "Processo", "Contato"].map((item, index) => (
-            <motion.div
-              key={item}
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.1 * index }}
-            >
-              <Link
-                href={`#${item.toLowerCase()}`}
-                className="text-sm font-medium text-white/80 hover:text-white relative group transition-colors"
+          {/* Desktop Navigation */}
+          <nav className="hidden md:flex items-center space-x-8">
+            {["Serviços", "Resultados", "Processo", "Conquistas", "Contato"].map((item, index) => (
+              <div
+                key={item}
+                className="opacity-0 animate-fade-in"
+                style={{ animationDelay: `${0.1 * index + 0.3}s`, animationFillMode: "forwards" }}
               >
-                {item}
-                <span className="absolute left-0 bottom-0 w-0 h-0.5 bg-gradient-to-r from-green-400 to-green-600 group-hover:w-full transition-all duration-300"></span>
-              </Link>
-            </motion.div>
-          ))}
-        </nav>
-
-
-        <div className="md:hidden">
-          <Button variant="ghost" size="icon" onClick={() => setMobileMenuOpen(!mobileMenuOpen)} className="text-white">
-            <Menu className="w-6 h-6" />
-          </Button>
-        </div>
-
-        <motion.div
-          initial={{ opacity: 0, x: 20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.5 }}
-          className="hidden md:block"
-        >
-          <Button
-            onClick={() => setIsFormOpen(true)}
-            className="relative overflow-hidden group bg-gradient-to-r from-green-500 to-green-700 hover:from-green-600 hover:to-green-800 text-white px-6 py-2 rounded-md transition-all duration-300 shadow-lg shadow-green-500/20"
-          >
-            <span className="relative z-10">Contratar Assessoria</span>
-            <span className="absolute inset-0 w-full h-full bg-white/20 transform translate-x-full group-hover:translate-x-0 transition-transform duration-300"></span>
-          </Button>
-        </motion.div>
-      </motion.header>
-
-
-      <AnimatePresence>
-        {mobileMenuOpen && (
-          <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.3 }}
-            className="fixed top-16 left-0 right-0 z-40 bg-black/95 backdrop-blur-lg border-b border-white/10 py-4 px-6"
-          >
-            <nav className="flex flex-col space-y-4">
-              {["Serviços", "Resultados", "Processo", "Contato"].map((item) => (
                 <Link
-                  key={item}
                   href={`#${item.toLowerCase()}`}
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="text-sm font-medium text-white/80 hover:text-white py-2 transition-colors"
+                  className="text-sm font-medium text-white/80 hover:text-white relative group transition-colors"
                 >
                   {item}
+                  <span className="absolute left-0 bottom-0 w-0 h-0.5 bg-gradient-to-r from-green-400 to-green-600 group-hover:w-full transition-all duration-300"></span>
                 </Link>
-              ))}
-              <Button
-                onClick={() => {
-                  setIsFormOpen(true)
-                  setMobileMenuOpen(false)
-                }}
-                className="mt-2 w-full bg-gradient-to-r from-green-500 to-green-700 hover:from-green-600 hover:to-green-800 text-white"
-              >
-                Contratar Assessoria
-              </Button>
-            </nav>
-          </motion.div>
-        )}
-      </AnimatePresence>
+              </div>
+            ))}
+          </nav>
 
-
-      <section className="relative z-10 pt-32 pb-32 px-6 md:px-10 lg:px-20 flex flex-col items-center justify-center min-h-[100vh]">
-        <motion.div
-          initial="hidden"
-          animate="visible"
-          variants={fadeInUp}
-          style={{ y: heroTextY, opacity: heroOpacity }}
-          className="text-center max-w-4xl mx-auto"
-        >
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.6 }}
-          >
-            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 leading-tight">
-              Olá 👋, seja bem-vindo! Se prepare, pois a{" "}
-              <span className="bg-clip-text text-transparent bg-gradient-to-r from-green-400 to-green-600">
-                evolução da sua Empresa
-              </span>{" "}
-              começa agora.
-            </h1>
-          </motion.div>
-
-          <motion.p variants={fadeInUp} className="text-xl md:text-2xl text-white/80 mb-8">
-            Impulsione o crescimento da sua Empresa com{" "}
-            <span className="bg-clip-text text-transparent bg-gradient-to-r from-green-400 to-green-600 font-semibold">
-              inteligência comercial
-            </span>
-            . Atraia mais clientes, otimize processos e escale sua operação online.
-          </motion.p>
-
-          <motion.div variants={fadeInUp} className="mt-10">
+          {/* Mobile Menu Button */}
+          <div className="md:hidden">
             <Button
-              onClick={() => setIsFormOpen(true)}
-              className="relative overflow-hidden group bg-gradient-to-r from-green-500 to-green-700 hover:from-green-600 hover:to-green-800 text-white px-10 py-6 text-lg rounded-md transition-all duration-300 shadow-xl shadow-green-500/20"
+              variant="ghost"
+              size="icon"
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="text-white"
             >
-              <span className="relative z-10 flex items-center">
-                Contratar Assessoria
-                <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
-              </span>
-              <span className="absolute inset-0 w-full h-full bg-white/20 transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300"></span>
-              <span className="absolute inset-0 flex items-center justify-center">
-                <span className="absolute w-full h-full bg-green-500/20 blur-md rounded-full scale-0 group-hover:scale-100 transition-transform duration-500"></span>
-              </span>
+              <Menu className="w-6 h-6" />
             </Button>
-          </motion.div>
-        </motion.div>
+          </div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 100 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.6, duration: 0.8 }}
-          className="absolute bottom-10 left-1/2 transform -translate-x-1/2 flex flex-col items-center"
+          {/* Update the button in the navbar to match the new style */}
+          <div
+            className="hidden md:block opacity-0 animate-fade-in"
+            style={{ animationDelay: "0.5s", animationFillMode: "forwards" }}
+          >
+            <HoverBorderGradientNavbar
+              containerClassName="rounded-full"
+              as="button"
+              className="text-white flex items-center space-x-2 px-5 py-2 "
+              onClick={() => setIsFormOpen(true)}
+            >
+              <span>Contratar Acessoria</span>
+            </HoverBorderGradientNavbar>
+          </div>
+        </header>
+      </div>
+
+      {/* Mobile Navigation Menu */}
+      {mobileMenuOpen && (
+        <div className="fixed top-24 left-0 right-0 z-40 bg-black/95 backdrop-blur-lg border-b border-white/10 py-4 px-6">
+          <nav className="flex flex-col space-y-4">
+            {["Serviços", "Resultados", "Processo", "Conquistas", "Contato"].map((item) => (
+              <Link
+                key={item}
+                href={`#${item.toLowerCase()}`}
+                onClick={() => setMobileMenuOpen(false)}
+                className="text-sm font-medium text-white/80 hover:text-white py-2 transition-colors"
+              >
+                {item}
+              </Link>
+            ))}
+            <AnimatedButton
+              onClick={() => {
+                setIsFormOpen(true)
+                setMobileMenuOpen(false)
+              }}
+              className="w-full"
+            >
+              Acelerar Vendas Agora
+            </AnimatedButton>
+          </nav>
+        </div>
+      )}
+
+      {/* Hero Section - Updated headline */}
+      <section className="relative z-10 pt-28 pb-32 px-6 md:px-10 lg:px-20 flex flex-col items-center justify-center min-h-[100vh]">
+        <div
+          className="text-center max-w-4xl mx-auto opacity-0 animate-fade-in-up"
+          style={{ animationFillMode: "forwards" }}
+        >
+          <div
+            className="opacity-0 animate-fade-in-scale"
+            style={{ animationDelay: "0.3s", animationFillMode: "forwards" }}
+          >
+            <p
+              className="text-6xl md:text-3xl text-white/80 mb-8 mt-6 opacity-0 animate-fade-in-up"
+              style={{ animationDelay: "0.5s", animationFillMode: "forwards" }}
+            >
+              Se prepare...
+            </p>
+            <h1 className="text-3xl md:text-4xl mt-6 lg:text-5xl font-bold mb-6 leading-tight">
+              Pois a evolução da sua <span className="text-gradient-primary">EMPRESA</span> começa agora!
+            </h1>
+          </div>
+
+          <p
+            className="text-xl md:text-2xl text-white/80 mb-8 mt-6 opacity-0 animate-fade-in-up"
+            style={{ animationDelay: "0.5s", animationFillMode: "forwards" }}
+          >
+            Impulsione o crescimento da sua Empresa com a{" "}
+            <span className="text-gradient-primary font-semibold">Metodologia Sofistic</span>, com clientes que crescem
+            acima de 400% durante a parceria. Atraia mais clientes, otimize processos e escale sua operação online.
+          </p>
+
+          <div
+            className="mt-10 opacity-0 animate-fade-in-up flex justify-center"
+            style={{ animationDelay: "0.7s", animationFillMode: "forwards" }}
+          >
+            <HoverBorderGradient
+              containerClassName="rounded-md"
+              as="button"
+              className="text-white flex items-center space-x-2 text-lg py-3 px-10"
+              onClick={() => setIsFormOpen(true)}
+            >
+              <span className="flex items-center">
+                Acelerar Vendas Agora
+                <ArrowRight className="ml-2 w-5 h-5 transition-transform" />
+              </span>
+            </HoverBorderGradient>
+          </div>
+        </div>
+
+        <div
+          className="absolute bottom-10 left-1/2 transform -translate-x-1/2 flex flex-col items-center opacity-0 animate-fade-in"
+          style={{ animationDelay: "1s", animationFillMode: "forwards" }}
         >
           <span className="text-white/60 text-sm mb-2">Descubra mais</span>
           <ChevronDown className="w-6 h-6 text-white/60 animate-bounce" />
-        </motion.div>
+        </div>
       </section>
 
-   
+      {/* Services Section - Updated with new card style */}
       <section id="serviços" className="relative z-10 py-20 px-6 md:px-10 lg:px-20">
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
-          variants={fadeInUp}
-          className="text-center max-w-3xl mx-auto mb-16"
+        <div
+          className="text-center max-w-3xl mx-auto mb-16 opacity-0 animate-fade-in-up"
+          style={{ animationFillMode: "forwards" }}
         >
-          <h2 className="text-3xl md:text-4xl font-bold mb-6">
-            Nossos{" "}
-            <span className="bg-clip-text text-transparent bg-gradient-to-r from-green-400 to-green-600">Serviços</span>
+          <h2 className="text-3xl md:text-4xl font-bold mb-6 flex items-center justify-center gap-3">
+            Nossos <AnimatedGradientText>Serviços</AnimatedGradientText>
           </h2>
           <p className="text-lg text-white/70">
             Soluções completas para impulsionar seu negócio no ambiente digital, com estratégias personalizadas e
             resultados mensuráveis.
           </p>
-        </motion.div>
+        </div>
 
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
-          variants={staggerContainer}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8"
-        >
-      
-          {[
-            {
-              icon: <Zap className="w-8 h-8 text-white" />,
-              title: "Automações",
-              description: "Automação comercial inteligente para equipes de alta performance",
-            },
-            {
-              icon: <PenTool className="w-8 h-8 text-white" />,
-              title: "Conversão",
-              description: "Copywriting cirúrgico com metodologia Sofistic",
-            },
-            {
-              icon: <TrendingUp className="w-8 h-8 text-white" />,
-              title: "Tráfego",
-              description: "Aumente a visibilidade da sua marca para gerar mais vendas",
-            },
-            {
-              icon: <Globe className="w-8 h-8 text-white" />,
-              title: "Site",
-              description: "Criação de sites que retêm e convertem visitantes",
-            },
-          ].map((service, index) => (
-            <motion.div
-              key={service.title}
-              variants={fadeInUp}
-              whileHover={{ y: -10, transition: { duration: 0.3 } }}
-              className="bg-gradient-to-br from-black/40 to-green-900/10 backdrop-blur-sm p-8 rounded-xl border border-white/10 group hover:border-green-500/50 transition-all duration-500 shadow-lg hover:shadow-green-500/10"
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+          {/* New Service Cards */}
+          {serviceCards.map((service, index) => (
+            <div
+              key={index}
+              className="opacity-0 animate-fade-in-up"
+              style={{ animationDelay: `${index * 0.1}s`, animationFillMode: "forwards" }}
             >
-              <motion.div
-                initial={{ scale: 1 }}
-                whileHover={{ scale: 1.1, rotate: 5 }}
-                transition={{ type: "spring", stiffness: 400, damping: 10 }}
-                className="w-16 h-16 bg-gradient-to-br from-green-400 to-green-600 rounded-lg flex items-center justify-center mb-6"
-              >
-                {service.icon}
-              </motion.div>
-              <h3 className="text-xl font-bold mb-4">{service.title}</h3>
-              <p className="text-white/70 mb-4">{service.description}</p>
-              <motion.div
-                className="flex items-center text-green-400 font-medium group-hover:translate-x-2 transition-transform duration-300"
-                whileHover={{ x: 5 }}
-              >
-                <span>Saiba mais</span>
-                <ArrowRight className="ml-2 w-4 h-4" />
-              </motion.div>
-            </motion.div>
+              <ServiceCard
+                icon={service.icon}
+                iconBgColor={service.iconBgColor}
+                title={service.title}
+                description={service.description}
+              />
+            </div>
           ))}
-        </motion.div>
+        </div>
       </section>
 
+      {/* Results Section with Counter Animation */}
       <section id="resultados" className="relative z-10 py-20 px-6 md:px-10 lg:px-20 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-green-900/10 to-black/50 z-0"></div>
 
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
-          variants={fadeInUp}
-          className="relative z-10 text-center max-w-3xl mx-auto mb-16"
+        <div
+          className="relative z-10 text-center max-w-3xl mx-auto mb-16 opacity-0 animate-fade-in-up"
+          style={{ animationFillMode: "forwards" }}
         >
-          <h2 className="text-3xl md:text-4xl font-bold mb-6">
-            <span className="bg-clip-text text-transparent bg-gradient-to-r from-green-400 to-green-600">
-              Pessoas Mentem…
-            </span>{" "}
-            Números Não!
-          </h2>
-          <p className="text-lg text-white/70">Tudo que seu negócio precisa para escalar de verdade</p>
-        </motion.div>
+          <h2 className="text-7xl md:text-8xl lg:text-9xl font-bold mb-4 text-gradient-tudo tracking-wide">Tudo</h2>
+          <p className="text-xl md:text-2xl mb-10 text-gradient-white-green">
+            que o seu negócio precisa para escalar de verdade
+          </p>
+          <h3 className="text-2xl md:text-3xl font-bold">
+            Alguns dados da nossa <AnimatedGradientText>Metodologia Digital:</AnimatedGradientText>
+          </h3>
+        </div>
 
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
-          variants={staggerContainer}
-          className="relative z-10 grid grid-cols-1 md:grid-cols-3 gap-8 mb-16"
-        >
-  
-          <motion.div
-            variants={fadeInUp}
-            whileHover={{ scale: 1.05, transition: { duration: 0.3 } }}
-            className="bg-gradient-to-br from-black/60 to-green-900/20 backdrop-blur-sm p-8 rounded-xl border border-white/10 text-center relative overflow-hidden group"
-          >
-            <span className="absolute -top-10 -right-10 w-20 h-20 bg-green-500/10 rounded-full blur-xl group-hover:bg-green-500/20 transition-colors duration-300"></span>
-            <div className="text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-green-400 mb-4">
-              <CountUp end={67} suffix="+" />
-            </div>
-            <p className="text-xl text-white/80">Clientes Turbinados</p>
-          </motion.div>
+        <div className="relative z-10 grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+          {/* Stats with Counter Animation */}
+          {[
+            { value: 67, suffix: "+", label: "Clientes Turbinados" },
+            { value: 7, prefix: "R$", suffix: "MI+", label: "Em faturamento gerado" },
+            { value: 2.3, prefix: "R$", suffix: "MI+", decimals: 1, label: "Investidos em mídias digitais" },
+          ].map((stat, index) => (
+            <SpotlightCard
+              key={index}
+              className="bg-gradient-to-br from-black/60 to-green-900/20 backdrop-blur-sm p-8 rounded-xl border border-white/10 text-center relative overflow-hidden group hover:scale-105 transition-transform duration-300 opacity-0 animate-fade-in-up"
+              style={{ animationDelay: `${0.1 * (index + 1)}s`, animationFillMode: "forwards" }}
+            >
+              <span className="absolute -top-10 -right-10 w-20 h-20 bg-green-500/10 rounded-full blur-xl group-hover:bg-green-500/20 transition-colors duration-300"></span>
+              <div className="text-5xl font-bold text-gradient-white-green mb-4">
+                {stat.prefix && stat.prefix}
+                <CountUp end={stat.value} decimals={stat.decimals || 0} suffix={stat.suffix} />
+              </div>
+              <p className="text-xl text-white/80">{stat.label}</p>
+            </SpotlightCard>
+          ))}
+        </div>
 
-          <motion.div
-            variants={fadeInUp}
-            whileHover={{ scale: 1.05, transition: { duration: 0.3 } }}
-            className="bg-gradient-to-br from-black/60 to-green-900/20 backdrop-blur-sm p-8 rounded-xl border border-white/10 text-center relative overflow-hidden group"
-          >
-            <span className="absolute -top-10 -right-10 w-20 h-20 bg-green-500/10 rounded-full blur-xl group-hover:bg-green-500/20 transition-colors duration-300"></span>
-            <div className="text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-green-400 mb-4">
-              R$
-              <CountUp end={7} suffix="MI+" />
-            </div>
-            <p className="text-xl text-white/80">Em faturamento gerado</p>
-          </motion.div>
-
-          <motion.div
-            variants={fadeInUp}
-            whileHover={{ scale: 1.05, transition: { duration: 0.3 } }}
-            className="bg-gradient-to-br from-black/60 to-green-900/20 backdrop-blur-sm p-8 rounded-xl border border-white/10 text-center relative overflow-hidden group"
-          >
-            <span className="absolute -top-10 -right-10 w-20 h-20 bg-green-500/10 rounded-full blur-xl group-hover:bg-green-500/20 transition-colors duration-300"></span>
-            <div className="text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-green-400 mb-4">
-              R$
-              <CountUp end={2.3} decimals={1} suffix="MI+" />
-            </div>
-            <p className="text-xl text-white/80">Investidos em mídias digitais</p>
-          </motion.div>
-        </motion.div>
-
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
-          variants={fadeInUp}
-          className="relative z-10 flex flex-wrap justify-center gap-6"
-        >
-         
+        <div className="relative z-10 flex flex-wrap justify-center gap-6">
+          {/* Badges with improved animations */}
           {[
             { icon: <CheckCircle className="w-5 h-5 text-green-400 mr-2" />, text: "Especialistas em Conversão" },
             { icon: <CheckCircle className="w-5 h-5 text-green-400 mr-2" />, text: "Estratégias Personalizadas" },
             { icon: <CheckCircle className="w-5 h-5 text-green-400 mr-2" />, text: "Resultados Comprovados" },
           ].map((badge, index) => (
-            <motion.div
+            <div
               key={badge.text}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.1, duration: 0.5 }}
-              whileHover={{ scale: 1.05, transition: { duration: 0.2 } }}
-              className="bg-gradient-to-r from-green-500/20 to-green-700/20 backdrop-blur-sm px-6 py-3 rounded-full border border-green-500/30 flex items-center group"
+              className="bg-gradient-to-r from-green-500/20 to-green-700/20 backdrop-blur-sm px-6 py-3 rounded-full border border-green-500/30 flex items-center group hover:scale-105 transition-transform duration-200 opacity-0 animate-fade-in"
+              style={{ animationDelay: `${index * 0.1 + 0.4}s`, animationFillMode: "forwards" }}
             >
-              <motion.span
-                animate={{ rotate: [0, 15, 0] }}
-                transition={{ repeat: Number.POSITIVE_INFINITY, repeatType: "mirror", duration: 2, delay: index }}
-              >
+              <span className="animate-pulse" style={{ animationDuration: "2s" }}>
                 {badge.icon}
-              </motion.span>
+              </span>
               <span className="text-white/90">{badge.text}</span>
-            </motion.div>
+            </div>
           ))}
-        </motion.div>
+        </div>
       </section>
 
-
-      <section id="processo" className="relative z-10 py-20 px-6 md:px-10 lg:px-20">
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
-          variants={fadeInUp}
-          className="text-center max-w-3xl mx-auto mb-16"
-        >
-          <h2 className="text-3xl md:text-4xl font-bold mb-6">
-            Como{" "}
-            <span className="bg-clip-text text-transparent bg-gradient-to-r from-green-400 to-green-600">
-              Trabalhamos
-            </span>
-          </h2>
-          <p className="text-lg text-white/70">Um processo simples e eficiente para transformar seu negócio</p>
-        </motion.div>
-
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
-          variants={staggerContainer}
-          className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-4 relative"
-        >
-         
-          <div className="absolute top-1/2 left-0 w-full h-0.5 bg-gradient-to-r from-green-500/50 via-green-700/50 to-green-500/50 hidden md:block">
-            <motion.div
-              initial={{ scaleX: 0 }}
-              whileInView={{ scaleX: 1 }}
-              transition={{ duration: 1.5, ease: "easeInOut" }}
-              className="h-full bg-green-500"
-              style={{ transformOrigin: "left" }}
-            />
+      {/* Process Section - Completely Redesigned */}
+      <section id="processo" className="relative z-10 py-32 px-6 md:px-10 lg:px-20">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-5xl md:text-6xl font-bold mb-6">
+              Como <AnimatedGradientText>Trabalhamos</AnimatedGradientText>
+            </h2>
+            <p className="text-xl text-white/70 max-w-2xl mx-auto">
+              Um processo simplificado e eficiente para transformar seu negócio e impulsionar seu crescimento.
+            </p>
           </div>
 
-
-          <motion.div
-            variants={fadeInUp}
-            whileHover={{ y: -10, transition: { duration: 0.3 } }}
-            className="relative z-10"
-          >
-            <div className="bg-gradient-to-br from-black/40 to-green-900/10 backdrop-blur-sm p-8 rounded-xl border border-white/10 text-center relative group hover:border-green-500/50 transition-all duration-300">
-              <motion.div
-                initial={{ scale: 1 }}
-                whileInView={{ scale: [1, 1.2, 1] }}
-                transition={{ duration: 0.5, delay: 0.3 }}
-                className="w-12 h-12 bg-gradient-to-br from-green-400 to-green-600 rounded-full flex items-center justify-center text-xl font-bold absolute -top-6 left-1/2 transform -translate-x-1/2 group-hover:shadow-lg group-hover:shadow-green-500/20 transition-all duration-300"
-              >
-                1
-              </motion.div>
-              <div className="pt-6">
-                <h3 className="text-xl font-bold mb-4">Diagnóstico</h3>
-                <p className="text-white/70">Preencha o formulário e agende um diagnóstico completo do seu negócio</p>
-              </div>
-            </div>
-          </motion.div>
-
-      
-          <motion.div
-            variants={fadeInUp}
-            whileHover={{ y: -10, transition: { duration: 0.3 } }}
-            className="relative z-10"
-          >
-            <div className="bg-gradient-to-br from-black/40 to-green-900/10 backdrop-blur-sm p-8 rounded-xl border border-white/10 text-center relative group hover:border-green-500/50 transition-all duration-300">
-              <motion.div
-                initial={{ scale: 1 }}
-                whileInView={{ scale: [1, 1.2, 1] }}
-                transition={{ duration: 0.5, delay: 0.6 }}
-                className="w-12 h-12 bg-gradient-to-br from-green-400 to-green-600 rounded-full flex items-center justify-center text-xl font-bold absolute -top-6 left-1/2 transform -translate-x-1/2 group-hover:shadow-lg group-hover:shadow-green-500/20 transition-all duration-300"
-              >
-                2
-              </motion.div>
-              <div className="pt-6">
-                <h3 className="text-xl font-bold mb-4">Plano de Ação</h3>
-                <p className="text-white/70">Receba análise completa + plano de ação personalizado para seu negócio</p>
-              </div>
-            </div>
-          </motion.div>
-
-          <motion.div
-            variants={fadeInUp}
-            whileHover={{ y: -10, transition: { duration: 0.3 } }}
-            className="relative z-10"
-          >
-            <div className="bg-gradient-to-br from-black/40 to-green-900/10 backdrop-blur-sm p-8 rounded-xl border border-white/10 text-center relative group hover:border-green-500/50 transition-all duration-300">
-              <motion.div
-                initial={{ scale: 1 }}
-                whileInView={{ scale: [1, 1.2, 1] }}
-                transition={{ duration: 0.5, delay: 0.9 }}
-                className="w-12 h-12 bg-gradient-to-br from-green-400 to-green-600 rounded-full flex items-center justify-center text-xl font-bold absolute -top-6 left-1/2 transform -translate-x-1/2 group-hover:shadow-lg group-hover:shadow-green-500/20 transition-all duration-300"
-              >
-                3
-              </motion.div>
-              <div className="pt-6">
-                <h3 className="text-xl font-bold mb-4">Resultados</h3>
-                <p className="text-white/70">Compartilhe seu sucesso com a Sofistic Midia e escale seu negócio</p>
-              </div>
-            </div>
-          </motion.div>
-        </motion.div>
+          {/* Interactive Process Journey Component */}
+          <ProcessJourney />
+        </div>
       </section>
 
+      {/* Achievement Showcase Section - NEW */}
+      <section id="conquistas" className="relative z-10 py-20 px-6 md:px-10 lg:px-20">
+        <div className="absolute inset-0 bg-gradient-to-b from-black/90 to-green-900/10 z-0"></div>
+        <AchievementShowcase />
+      </section>
 
+      {/* CTA Section - Redesigned to match the image */}
       <section id="contato" className="relative z-10 py-20 px-6 md:px-10 lg:px-20">
         <div className="absolute inset-0 bg-gradient-to-t from-green-900/20 to-black/50 z-0"></div>
 
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
-          variants={fadeInUp}
-          className="relative z-10 max-w-4xl mx-auto bg-gradient-to-br from-black/80 to-green-900/20 backdrop-blur-sm p-10 md:p-16 rounded-2xl border border-white/10 shadow-2xl"
-        >
-          <div className="text-center mb-10">
-            <h2 className="text-3xl md:text-4xl font-bold mb-6">
-              Nosso trabalho é{" "}
-              <span className="bg-clip-text text-transparent bg-gradient-to-r from-green-400 to-green-600">
-                exclusivo
-              </span>
-            </h2>
-            <p className="text-xl text-white/80 mb-4">
-              Não temos "ofertas de prateleira". Nem sempre temos vagas disponíveis.
-            </p>
-            <p className="text-lg text-white/70">
-              Aproveite agora e receba um diagnóstico completo da sua empresa para crescer ainda mais em 2025!
-            </p>
-          </div>
-
-          <div className="flex justify-center">
-            <Button
-              onClick={() => setIsFormOpen(true)}
-              className="relative overflow-hidden group bg-gradient-to-r from-green-500 to-green-700 hover:from-green-600 hover:to-green-800 text-white px-10 py-6 text-lg rounded-md transition-all duration-300 shadow-xl shadow-green-500/20 animate-pulse hover:animate-none"
-            >
-              <span className="relative z-10 flex items-center">
-                Quero Escalar Meu Negócio
-                <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
-              </span>
-              <span className="absolute inset-0 w-full h-full bg-white/20 transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300"></span>
-              <span className="absolute inset-0 flex items-center justify-center">
-                <span className="absolute w-full h-full bg-green-500/20 blur-md rounded-full scale-0 group-hover:scale-100 transition-transform duration-500"></span>
-              </span>
-            </Button>
-          </div>
-        </motion.div>
+        {/* New Exclusive CTA Component */}
+        <ExclusiveCta onButtonClick={() => setIsFormOpen(true)} />
       </section>
 
+      {/* Footer */}
       <footer className="relative z-10 py-10 px-6 md:px-10 lg:px-20 border-t border-white/10">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center">
           <div className="mb-6 md:mb-0">
-            <div className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-green-400 mb-2">
-              SOFISTIC
-            </div>
+            <Image src="/images/logo.png" alt="Sofistic Midia" width={150} height={50} className="h-10 w-auto mb-2" />
             <p className="text-white/60 text-sm">
               © {new Date().getFullYear()} Sofistic Midia LTDA. Todos os direitos reservados.
             </p>
@@ -619,48 +460,41 @@ export default function LandingPage() {
         </div>
       </footer>
 
- 
+      {/* Multi-step Contact Form Modal */}
       {isFormOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
           <div className="absolute inset-0 bg-black/80 backdrop-blur-sm" onClick={closeForm}></div>
 
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.9 }}
-            transition={{ duration: 0.3 }}
-            className="relative z-10 bg-gradient-to-br from-black to-green-900/30 w-full max-w-lg rounded-xl border border-white/10 shadow-2xl overflow-hidden"
+          <div
+            className="relative z-10 bg-gradient-to-br from-black to-green-900/30 w-full max-w-lg rounded-xl border border-white/10 shadow-2xl overflow-hidden opacity-0 animate-fade-in-scale"
+            style={{ animationFillMode: "forwards", animationDuration: "0.3s" }}
           >
-            <div className="p-6 md:p-8">
-              <div className="flex justify-between items-center mb-6">
-                <h3 className="text-xl font-bold">Contratar Assessoria</h3>
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  onClick={closeForm}
-                  className="text-white/70 hover:text-white hover:bg-white/10"
-                >
-                  <X className="w-5 h-5" />
-                </Button>
-              </div>
+            <SpotlightCard className="bg-transparent border-none">
+              <div className="p-6 md:p-8">
+                <div className="flex justify-between items-center mb-6">
+                  <h3 className="text-xl font-bold">Contratar Assessoria</h3>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    onClick={closeForm}
+                    className="text-white/70 hover:text-white hover:bg-white/10"
+                  >
+                    <X className="w-5 h-5" />
+                  </Button>
+                </div>
 
+                {/* Progress Indicator */}
+                <div className="w-full bg-white/10 h-1 rounded-full mb-8 overflow-hidden">
+                  <div
+                    className="h-full bg-gradient-to-r from-green-400 to-green-600 transition-all duration-300"
+                    style={{ width: `${(formStep / 3) * 100}%` }}
+                  />
+                </div>
 
-              <div className="w-full bg-white/10 h-1 rounded-full mb-8 overflow-hidden">
-                <motion.div
-                  initial={{ width: "0%" }}
-                  animate={{ width: `${(formStep / 3) * 100}%` }}
-                  className="h-full bg-gradient-to-r from-green-400 to-green-600"
-                />
-              </div>
-
-              <AnimatePresence mode="wait">
                 {formStep === 1 && (
-                  <motion.div
-                    key="step1"
-                    initial={{ opacity: 0, x: 20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    exit={{ opacity: 0, x: -20 }}
-                    transition={{ duration: 0.3 }}
+                  <div
+                    className="opacity-0 animate-fade-in-right"
+                    style={{ animationFillMode: "forwards", animationDuration: "0.3s" }}
                   >
                     <h4 className="text-lg font-medium mb-4">Informações Pessoais</h4>
 
@@ -718,16 +552,13 @@ export default function LandingPage() {
                         <ArrowRight className="ml-2 w-4 h-4" />
                       </Button>
                     </div>
-                  </motion.div>
+                  </div>
                 )}
 
                 {formStep === 2 && (
-                  <motion.div
-                    key="step2"
-                    initial={{ opacity: 0, x: 20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    exit={{ opacity: 0, x: -20 }}
-                    transition={{ duration: 0.3 }}
+                  <div
+                    className="opacity-0 animate-fade-in-right"
+                    style={{ animationFillMode: "forwards", animationDuration: "0.3s" }}
                   >
                     <h4 className="text-lg font-medium mb-4">Informações da Empresa</h4>
 
@@ -764,16 +595,13 @@ export default function LandingPage() {
                         <ArrowRight className="ml-2 w-4 h-4" />
                       </Button>
                     </div>
-                  </motion.div>
+                  </div>
                 )}
 
                 {formStep === 3 && (
-                  <motion.div
-                    key="step3"
-                    initial={{ opacity: 0, x: 20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    exit={{ opacity: 0, x: -20 }}
-                    transition={{ duration: 0.3 }}
+                  <div
+                    className="opacity-0 animate-fade-in-right"
+                    style={{ animationFillMode: "forwards", animationDuration: "0.3s" }}
                   >
                     <h4 className="text-lg font-medium mb-4">Sua Mensagem</h4>
 
@@ -809,15 +637,15 @@ export default function LandingPage() {
                         Enviar Solicitação
                       </Button>
                     </div>
-                  </motion.div>
+                  </div>
                 )}
-              </AnimatePresence>
 
-              <div className="mt-6 pt-6 border-t border-white/10 text-center text-sm text-white/60">
-                Você receberá um retorno em até 24 horas úteis.
+                <div className="mt-6 pt-6 border-t border-white/10 text-center text-sm text-white/60">
+                  Você receberá um retorno em até 24 horas úteis.
+                </div>
               </div>
-            </div>
-          </motion.div>
+            </SpotlightCard>
+          </div>
         </div>
       )}
     </div>

@@ -1,9 +1,7 @@
 "use client"
 
 import type React from "react"
-import { useEffect, useState, useRef } from "react"
-import { ArrowRight } from "lucide-react"
-import { BackgroundGradient } from "@/components/ui/background-gradient"
+import { useEffect, useRef, useState } from "react"
 
 interface ServiceCardProps {
   icon: React.ReactNode
@@ -12,6 +10,7 @@ interface ServiceCardProps {
   description: string
 }
 
+// Add floating dots effect and green gradient border to ServiceCard
 export default function ServiceCard({ icon, iconBgColor, title, description }: ServiceCardProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const [particles, setParticles] = useState<
@@ -21,6 +20,7 @@ export default function ServiceCard({ icon, iconBgColor, title, description }: S
       size: number
       speedX: number
       speedY: number
+      opacity: number
     }>
   >([])
 
@@ -36,6 +36,7 @@ export default function ServiceCard({ icon, iconBgColor, title, description }: S
         size: Math.random() * 1.5 + 0.5,
         speedX: (Math.random() - 0.5) * 0.3,
         speedY: (Math.random() - 0.5) * 0.3,
+        opacity: Math.random() * 0.5 + 0.2,
       })
     }
 
@@ -58,28 +59,8 @@ export default function ServiceCard({ icon, iconBgColor, title, description }: S
     const render = () => {
       ctx.clearRect(0, 0, containerWidth, containerHeight)
 
-      // Draw grid pattern
-      ctx.strokeStyle = "rgba(255, 255, 255, 0.1)"
-      ctx.lineWidth = 0.5
-
-      // Horizontal grid lines
-      for (let y = 0; y <= containerHeight; y += 20) {
-        ctx.beginPath()
-        ctx.moveTo(0, y)
-        ctx.lineTo(containerWidth, y)
-        ctx.stroke()
-      }
-
-      // Vertical grid lines
-      for (let x = 0; x <= containerWidth; x += 20) {
-        ctx.beginPath()
-        ctx.moveTo(x, 0)
-        ctx.lineTo(x, containerHeight)
-        ctx.stroke()
-      }
-
       // Update and draw particles
-      particles.forEach((particle, i) => {
+      particles.forEach((particle) => {
         // Update position
         particle.x += particle.speedX
         particle.y += particle.speedY
@@ -94,7 +75,7 @@ export default function ServiceCard({ icon, iconBgColor, title, description }: S
 
         ctx.beginPath()
         ctx.arc(x, y, particle.size, 0, Math.PI * 2)
-        ctx.fillStyle = "rgba(255, 255, 255, 0.6)"
+        ctx.fillStyle = `rgba(76, 175, 80, ${particle.opacity})`
         ctx.fill()
       })
 
@@ -109,30 +90,31 @@ export default function ServiceCard({ icon, iconBgColor, title, description }: S
   }, [particles])
 
   return (
-     <BackgroundGradient className="rounded-xl bg-[#212121] h-[420px] p-5  ">
-   
-
-
+    <div className="relative rounded-xl h-[455px] p-[1px] overflow-hidden">
+    
+      {/* Card content */}
+      <div className="relative bg-[#212121] h-full w-full rounded-lg p-5 flex flex-col">
         {/* Top rectangular area with animated particles */}
-        <div className="relative aspect-[16/9] w-full bg-black rounded-xl overflow-hidden z-10 mx-auto ">
-          {/* Canvas for particles and grid */}
+        <div
+          className="relative aspect-[16/9] w-full bg-black rounded-xl overflow-hidden z-10 mx-auto flex items-center justify-center"
+          style={{ minHeight: "160px" }}
+        >
+          {/* Canvas for floating dots */}
           <canvas ref={canvasRef} className="absolute inset-0 w-full h-full" width={300} height={169} />
 
           {/* Icon in the center */}
-          <div className="absolute inset-0 flex items-center justify-center">
-            <div className={`w-16 h-16 ${iconBgColor} rounded-full flex items-center justify-center z-10`}>{icon}</div>
+          <div className={`w-auto h-auto ${iconBgColor} rounded-full flex items-center justify-center z-10 p-1`}>
+            {icon}
           </div>
         </div>
 
         {/* Content area */}
-        <div className="p-6 relative z-10">
+        <div className="p-6 relative z-10 flex-grow">
           {/* Text content */}
           <h3 className="text-xl font-bold text-white text-center mb-3">{title}</h3>
           <p className="text-white/70 text-sm text-center mb-4">{description}</p>
-
-        
         </div>
-    
-    </BackgroundGradient>
+      </div>
+    </div>
   )
 }

@@ -22,12 +22,12 @@ export default function ExclusiveCta({ onButtonClick }: ExclusiveCtaProps) {
         transition={{ duration: 0.6, ease: "easeOut" }}
         className="relative overflow-hidden rounded-3xl border border-white/10 bg-black/60 backdrop-blur-sm p-12 md:p-16"
       >
-        {/* Background grid pattern */}
-        <div className="absolute inset-0 bg-[url('/grid-pattern.svg')] opacity-20"></div>
+        {/* Remove background grid pattern */}
+        {/* <div className="absolute inset-0 bg-[url('/grid-pattern.svg')] opacity-20"></div> */}
 
-        {/* Glowing orbs */}
-        <div className="absolute -top-20 -right-20 w-40 h-40 bg-green-500/20 rounded-full blur-[80px]"></div>
-        <div className="absolute -bottom-20 -left-20 w-40 h-40 bg-green-500/20 rounded-full blur-[80px]"></div>
+        {/* Remove glowing orbs */}
+        {/* <div className="absolute -top-20 -right-20 w-40 h-40 bg-green-500/20 rounded-full blur-[80px]"></div>
+      <div className="absolute -bottom-20 -left-20 w-40 h-40 bg-green-500/20 rounded-full blur-[80px]"></div> */}
 
         {/* Content container */}
         <div className="relative z-10 text-center">
@@ -61,7 +61,8 @@ export default function ExclusiveCta({ onButtonClick }: ExclusiveCtaProps) {
               Agende já uma reunião
               <ArrowRight className="ml-2 w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
             </span>
-            <span className="absolute inset-0 bg-[url('/grid-pattern.svg')] opacity-20" />
+            {/* Remove grid pattern */}
+            {/* <span className="absolute inset-0 bg-[url('/grid-pattern.svg')] opacity-20" /> */}
           </motion.button>
         </div>
       </motion.div>

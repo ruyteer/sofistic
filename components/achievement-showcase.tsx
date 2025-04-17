@@ -1,27 +1,27 @@
-"use client"
+"use client";
 
-import { useState, useEffect, useRef } from "react"
-import { useInView } from "react-intersection-observer"
-import { motion, useAnimation } from "framer-motion"
-import Image from "next/image"
-import { cn } from "@/lib/utils"
-import { Trophy, Award } from "lucide-react"
+import { useState, useEffect, useRef } from "react";
+import { useInView } from "react-intersection-observer";
+import { motion, useAnimation } from "framer-motion";
+import Image from "next/image";
+import { cn } from "@/lib/utils";
+import { Trophy, Award } from "lucide-react";
 
 interface AchievementPlaque {
-  id: string
-  title: string
-  description: string
-  imageSrc: string
-  color: string
+  id: string;
+  title: string;
+  description: string;
+  imageSrc: string;
+  color: string;
 }
 
 export default function AchievementShowcase() {
-  const [activeIndex, setActiveIndex] = useState(0)
-  const [isAutoPlaying, setIsAutoPlaying] = useState(true)
-  const containerRef = useRef<HTMLDivElement>(null)
-  const carouselRef = useRef<HTMLDivElement>(null)
-  const isInView = useInView(containerRef, { once: false, amount: 0.3 })[0]
-  const controls = useAnimation()
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [isAutoPlaying, setIsAutoPlaying] = useState(true);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const carouselRef = useRef<HTMLDivElement>(null);
+  const isInView = useInView(containerRef, { once: false, amount: 0.3 })[0];
+  const controls = useAnimation();
 
   const plaques: AchievementPlaque[] = [
     {
@@ -52,45 +52,50 @@ export default function AchievementShowcase() {
       imageSrc: "/images/placa-5m.jpeg",
       color: "from-red-500/30 to-red-700/30",
     },
-  ]
+  ];
 
   useEffect(() => {
-    let interval: NodeJS.Timeout
+    let interval: NodeJS.Timeout;
 
     if (isInView && isAutoPlaying) {
       interval = setInterval(() => {
-        setActiveIndex((prev) => (prev === plaques.length - 1 ? 0 : prev + 1))
-        scrollToActive()
-      }, 5000)
+        setActiveIndex((prev) => (prev === plaques.length - 1 ? 0 : prev + 1));
+        scrollToActive();
+      }, 5000);
     }
 
-    return () => clearInterval(interval)
-  }, [isInView, isAutoPlaying, plaques.length, activeIndex])
+    return () => clearInterval(interval);
+  }, [isInView, isAutoPlaying, plaques.length, activeIndex]);
 
   useEffect(() => {
     if (isInView) {
-      controls.start("visible")
+      controls.start("visible");
     }
-  }, [controls, isInView])
+  }, [controls, isInView]);
 
   const scrollToActive = () => {
     if (carouselRef.current) {
-      const scrollContainer = carouselRef.current
-      const activeElement = scrollContainer.children[activeIndex] as HTMLElement
+      const scrollContainer = carouselRef.current;
+      const activeElement = scrollContainer.children[
+        activeIndex
+      ] as HTMLElement;
 
       if (activeElement) {
-        const scrollLeft = activeElement.offsetLeft - scrollContainer.offsetWidth / 2 + activeElement.offsetWidth / 2
+        const scrollLeft =
+          activeElement.offsetLeft -
+          scrollContainer.offsetWidth / 2 +
+          activeElement.offsetWidth / 2;
         scrollContainer.scrollTo({
           left: scrollLeft,
           behavior: "smooth",
-        })
+        });
       }
     }
-  }
+  };
 
   useEffect(() => {
-    scrollToActive()
-  }, [activeIndex])
+    scrollToActive();
+  }, [activeIndex]);
 
   return (
     <div ref={containerRef} className="relative py-16 overflow-hidden">
@@ -116,14 +121,18 @@ export default function AchievementShowcase() {
         </p>
       </motion.div>
 
-      <div className="max-w-5xl mx-auto px-4 relative" data-aos="fade-up" data-aos-delay="200">
+      <div
+        className="max-w-5xl mx-auto px-4 relative"
+        data-aos="fade-up"
+        data-aos-delay="200"
+      >
         <div
           ref={carouselRef}
           className="flex overflow-x-auto pb-8 snap-x snap-mandatory hide-scrollbar"
           style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
         >
           {plaques.map((plaque, index) => {
-            const isActive = activeIndex === index
+            const isActive = activeIndex === index;
 
             return (
               <motion.div
@@ -143,12 +152,12 @@ export default function AchievementShowcase() {
                 }}
                 className="flex-shrink-0 cursor-pointer transform snap-center mx-4"
                 onHoverStart={() => {
-                  setIsAutoPlaying(false)
-                  setActiveIndex(index)
+                  setIsAutoPlaying(false);
+                  setActiveIndex(index);
                 }}
                 onClick={() => {
-                  setIsAutoPlaying(false)
-                  setActiveIndex(index)
+                  setIsAutoPlaying(false);
+                  setActiveIndex(index);
                 }}
                 style={{
                   width: isActive ? "220px" : "180px",
@@ -161,10 +170,12 @@ export default function AchievementShowcase() {
                   <div
                     className={cn(
                       "absolute -inset-1 bg-gradient-to-r blur-lg",
-                      isActive ? `${plaque.color} opacity-50` : "from-white/10 to-white/20 opacity-20",
+                      isActive
+                        ? `${plaque.color} opacity-50`
+                        : "from-white/10 to-white/20 opacity-20"
                     )}
                   ></div>
-                  <div className="relative bg-black overflow-hidden h-full">
+                  <div className="relative overflow-hidden h-full">
                     <div className="w-full h-full relative">
                       <Image
                         src={plaque.imageSrc || "/placeholder.svg"}
@@ -180,15 +191,17 @@ export default function AchievementShowcase() {
                   </div>
                 </div>
               </motion.div>
-            )
+            );
           })}
         </div>
 
         <div className="flex justify-between absolute top-1/2 left-0 right-0 transform -translate-y-1/2 px-2 md:px-0 pointer-events-none">
           <button
             onClick={() => {
-              setIsAutoPlaying(false)
-              setActiveIndex((prev) => (prev === 0 ? plaques.length - 1 : prev - 1))
+              setIsAutoPlaying(false);
+              setActiveIndex((prev) =>
+                prev === 0 ? plaques.length - 1 : prev - 1
+              );
             }}
             className="w-10 h-10 rounded-full bg-black/50 flex items-center justify-center text-white border border-white/20 pointer-events-auto hover:bg-black/80 transition-colors md:-ml-5 lg:-ml-12"
             aria-label="Placa anterior"
@@ -200,13 +213,20 @@ export default function AchievementShowcase() {
               viewBox="0 0 24 24"
               stroke="currentColor"
             >
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M15 19l-7-7 7-7"
+              />
             </svg>
           </button>
           <button
             onClick={() => {
-              setIsAutoPlaying(false)
-              setActiveIndex((prev) => (prev === plaques.length - 1 ? 0 : prev + 1))
+              setIsAutoPlaying(false);
+              setActiveIndex((prev) =>
+                prev === plaques.length - 1 ? 0 : prev + 1
+              );
             }}
             className="w-10 h-10 rounded-full bg-black/50 flex items-center justify-center text-white border border-white/20 pointer-events-auto hover:bg-black/80 transition-colors md:-mr-5 lg:-mr-12"
             aria-label="Próxima placa"
@@ -218,7 +238,12 @@ export default function AchievementShowcase() {
               viewBox="0 0 24 24"
               stroke="currentColor"
             >
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M9 5l7 7-7 7"
+              />
             </svg>
           </button>
         </div>
@@ -240,24 +265,32 @@ export default function AchievementShowcase() {
             <span className="text-green-400 font-medium">Marco Alcançado</span>
           </div>
           <h3 className="text-3xl md:text-4xl font-bold mb-4">
-            <span className="text-gradient-primary">{plaques[activeIndex].title}</span>
+            <span className="text-gradient-primary">
+              {plaques[activeIndex].title}
+            </span>
           </h3>
-          <p className="text-lg text-white/80 mb-6">{plaques[activeIndex].description}</p>
+          <p className="text-lg text-white/80 mb-6">
+            {plaques[activeIndex].description}
+          </p>
         </motion.div>
 
-        <div className="flex justify-center mt-8 gap-3" data-aos="fade-up" data-aos-delay="400">
+        <div
+          className="flex justify-center mt-8 gap-3"
+          data-aos="fade-up"
+          data-aos-delay="400"
+        >
           {plaques.map((_, index) => (
             <button
               key={index}
               onClick={() => {
-                setIsAutoPlaying(false)
-                setActiveIndex(index)
+                setIsAutoPlaying(false);
+                setActiveIndex(index);
               }}
               className={cn(
                 "w-3 h-3 rounded-full transition-all duration-300",
                 activeIndex === index
                   ? "bg-green-500 scale-125 shadow-lg shadow-green-500/20"
-                  : "bg-white/20 hover:bg-white/40",
+                  : "bg-white/20 hover:bg-white/40"
               )}
               aria-label={`Ver placa ${index + 1}`}
             />
@@ -267,5 +300,5 @@ export default function AchievementShowcase() {
 
       <div className="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-green-500/30 to-transparent"></div>
     </div>
-  )
+  );
 }

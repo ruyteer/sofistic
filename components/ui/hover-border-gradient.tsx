@@ -36,7 +36,6 @@ export function HoverBorderGradient({
     return directions[nextIndex]
   }
 
-  // Enhanced white border effect with stronger visibility
   const movingMap: Record<Direction, string> = {
     TOP: "radial-gradient(20.7% 50% at 50% 0%, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0) 100%)",
     LEFT: "radial-gradient(16.6% 43.1% at 0% 50%, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0) 100%)",
@@ -68,7 +67,6 @@ export function HoverBorderGradient({
       )}
       {...props}
     >
-      {/* Main button content with gradient background */}
       <div
         className={cn(
           "w-auto text-white z-10  bg-gradient-to-r from-green-800 to-green-600 px-4 py-2 rounded-[8px]",
@@ -78,7 +76,6 @@ export function HoverBorderGradient({
         {children}
       </div>
 
-      {/* Animated white border effect */}
       <motion.div
         className={cn("flex-none inset-0 overflow-hidden absolute z-0 rounded-[8px]")}
         style={{
@@ -97,7 +94,6 @@ export function HoverBorderGradient({
         transition={{ ease: "linear", duration: duration ?? 1 }}
       />
 
-      {/* Inner background that creates the border effect */}
       <div className="bg-gradient-to-r from-green-700 to-green-300 absolute z-1 flex-none inset-[1px] rounded-[8px]" />
     </Tag>
   )
@@ -132,7 +128,6 @@ export function HoverBorderGradientNavbar({
     return directions[nextIndex]
   }
 
-  // Enhanced white border effect with stronger visibility
   const movingMap: Record<Direction, string> = {
     TOP: "radial-gradient(20.7% 50% at 50% 0%, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0) 100%)",
     LEFT: "radial-gradient(16.6% 43.1% at 0% 50%, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0) 100%)",
@@ -164,7 +159,6 @@ export function HoverBorderGradientNavbar({
       )}
       {...props}
     >
-      {/* Main button content with gradient background */}
       <div
         className={cn(
           "w-auto text-white z-10  bg-gradient-to-r from-green-800 to-green-600 px-4 py-2 rounded-full",
@@ -174,7 +168,6 @@ export function HoverBorderGradientNavbar({
         {children}
       </div>
 
-      {/* Animated white border effect */}
       <motion.div
         className={cn("flex-none inset-0 overflow-hidden absolute z-0 rounded-full")}
         style={{
@@ -193,7 +186,6 @@ export function HoverBorderGradientNavbar({
         transition={{ ease: "linear", duration: duration ?? 1 }}
       />
 
-      {/* Inner background that creates the border effect */}
       <div className="bg-gradient-to-r from-green-700 to-green-300 absolute z-1 flex-none inset-[1px] rounded-full" />
     </Tag>
   )

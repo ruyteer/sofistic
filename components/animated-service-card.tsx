@@ -15,7 +15,6 @@ export default function AnimatedServiceCard({ icon, title, description }: Animat
   const [particles, setParticles] = useState<{ x: number; y: number; size: number; delay: number }[]>([])
 
   useEffect(() => {
-    // Generate random particles
     const newParticles = []
     for (let i = 0; i < 15; i++) {
       newParticles.push({
@@ -30,17 +29,12 @@ export default function AnimatedServiceCard({ icon, title, description }: Animat
 
   return (
     <div className="bg-black rounded-xl overflow-hidden border border-white/5 shadow-lg relative hover:-translate-y-1 transition-transform duration-300">
-      {/* Grid background */}
       <div className="absolute inset-0 bg-[url('/grid-pattern.svg')] opacity-20"></div>
 
-      {/* Content container */}
       <div className="p-6 flex flex-col items-center">
-        {/* Icon container */}
         <div className="relative w-20 h-20 mb-6">
-          {/* Animated background circle */}
           <div className="absolute inset-0 rounded-full bg-gradient-to-br from-green-600 to-green-700 animate-pulse" />
 
-          {/* Particles */}
           {particles.map((particle, index) => (
             <div
               key={index}
@@ -58,7 +52,6 @@ export default function AnimatedServiceCard({ icon, title, description }: Animat
             />
           ))}
 
-          {/* Icon */}
           <div
             className="absolute inset-0 flex items-center justify-center text-white z-10 animate-pulse"
             style={{
@@ -69,7 +62,6 @@ export default function AnimatedServiceCard({ icon, title, description }: Animat
           </div>
         </div>
 
-        {/* Text content */}
         <h3 className="text-xl font-bold text-white text-center mb-3">{title}</h3>
         <p className="text-white/70 text-sm text-center mb-4">{description}</p>
 

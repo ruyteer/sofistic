@@ -33,7 +33,6 @@ export default function AnimatedButton({ children, onClick, className, variant =
           : "transparent",
       }}
     >
-      {/* Animated border */}
       <div
         className="absolute inset-0 rounded-md border border-green-500 overflow-hidden"
         style={{
@@ -42,7 +41,6 @@ export default function AnimatedButton({ children, onClick, className, variant =
         }}
       />
 
-      {/* Content */}
       <span className="relative z-10">{children}</span>
     </button>
   )

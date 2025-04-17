@@ -5,6 +5,11 @@ import { ThemeProvider } from "@/components/theme-provider"
 export const metadata = {
   title: "Sofistic Midia - Impulsione o crescimento da sua empresa",
   description: "Atraia mais clientes, otimize processos e escale sua operação online com a Sofistic Midia.",
+  icons: {
+    icon: "/images/logo.png",
+    shortcut: "/images/logo.png",
+    apple: "/images/logo.png",
+  },
     generator: 'v0.dev'
 }
 

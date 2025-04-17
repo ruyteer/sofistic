@@ -5,6 +5,7 @@ import type React from "react"
 import { useState } from "react"
 import { ChevronDown, ClipboardList, Phone } from "lucide-react"
 import { cn } from "@/lib/utils"
+import ScrollAnimation from "@/components/scroll-animation"
 
 export default function ContactForm() {
   const [formData, setFormData] = useState({
@@ -23,28 +24,22 @@ export default function ContactForm() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    // Handle form submission
     console.log("Form submitted:", formData)
-    // Here you would typically send the data to your backend
     alert("Formulário enviado com sucesso! Entraremos em contato em breve.")
   }
 
   return (
     <div className="w-full max-w-6xl mx-auto bg-[#121212] rounded-2xl border border-white/10 p-10 md:p-16 relative overflow-hidden">
-      {/* Decorative circle - keeping only the circle, removing the path */}
       <div className="absolute top-6 right-6 pointer-events-none">
         <div className="w-8 h-8 rounded-full bg-green-500"></div>
       </div>
 
-      {/* Heading */}
-      <h2 className="text-3xl md:text-4xl font-bold mb-10">
+      <ScrollAnimation animation="fade-up" className="text-3xl md:text-4xl font-bold mb-10">
         Dar o <span className="text-green-400">próximo passo</span> leva menos de um minuto
-      </h2>
+      </ScrollAnimation>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
-        {/* Left side - Steps */}
-        <div className="space-y-12">
-          {/* Step 1 */}
+        <ScrollAnimation animation="fade-right" delay={100} className="space-y-12">
           <div className="flex items-start gap-4">
             <div className="bg-green-500 p-3 rounded-md flex-shrink-0 mt-1">
               <ClipboardList className="w-5 h-5 text-white" />
@@ -57,7 +52,6 @@ export default function ContactForm() {
             </div>
           </div>
 
-          {/* Step 2 */}
           <div className="flex items-start gap-4">
             <div className="bg-green-500 p-3 rounded-md flex-shrink-0 mt-1">
               <Phone className="w-5 h-5 text-white" />
@@ -70,59 +64,61 @@ export default function ContactForm() {
               </p>
             </div>
           </div>
-        </div>
+        </ScrollAnimation>
 
-        {/* Right side - Form */}
         <form onSubmit={handleSubmit} className="space-y-5">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-            {/* Name */}
-            <input
-              type="text"
-              name="name"
-              value={formData.name}
-              onChange={handleInputChange}
-              placeholder="Seu nome"
-              className="w-full bg-[#1A1A1A] border border-white/10 rounded-md px-4 py-4 text-white placeholder:text-white/50 focus:outline-none focus:border-green-500"
-              required
-            />
+            <ScrollAnimation animation="fade-up" delay={100}>
+              <input
+                type="text"
+                name="name"
+                value={formData.name}
+                onChange={handleInputChange}
+                placeholder="Seu nome"
+                className="w-full bg-[#1A1A1A] border border-white/10 rounded-md px-4 py-4 text-white placeholder:text-white/50 focus:outline-none focus:border-green-500"
+                required
+              />
+            </ScrollAnimation>
 
-            {/* Email */}
-            <input
-              type="email"
-              name="email"
-              value={formData.email}
-              onChange={handleInputChange}
-              placeholder="Seu melhor e-mail"
-              className="w-full bg-[#1A1A1A] border border-white/10 rounded-md px-4 py-4 text-white placeholder:text-white/50 focus:outline-none focus:border-green-500"
-              required
-            />
+            <ScrollAnimation animation="fade-up" delay={150}>
+              <input
+                type="email"
+                name="email"
+                value={formData.email}
+                onChange={handleInputChange}
+                placeholder="Seu melhor e-mail"
+                className="w-full bg-[#1A1A1A] border border-white/10 rounded-md px-4 py-4 text-white placeholder:text-white/50 focus:outline-none focus:border-green-500"
+                required
+              />
+            </ScrollAnimation>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-            {/* WhatsApp */}
-            <input
-              type="tel"
-              name="whatsapp"
-              value={formData.whatsapp}
-              onChange={handleInputChange}
-              placeholder="Seu Whatsapp"
-              className="w-full bg-[#1A1A1A] border border-white/10 rounded-md px-4 py-4 text-white placeholder:text-white/50 focus:outline-none focus:border-green-500"
-              required
-            />
+            <ScrollAnimation animation="fade-up" delay={200}>
+              <input
+                type="tel"
+                name="whatsapp"
+                value={formData.whatsapp}
+                onChange={handleInputChange}
+                placeholder="Seu Whatsapp"
+                className="w-full bg-[#1A1A1A] border border-white/10 rounded-md px-4 py-4 text-white placeholder:text-white/50 focus:outline-none focus:border-green-500"
+                required
+              />
+            </ScrollAnimation>
 
-            {/* Instagram */}
-            <input
-              type="text"
-              name="instagram"
-              value={formData.instagram}
-              onChange={handleInputChange}
-              placeholder="Instagram da empresa"
-              className="w-full bg-[#1A1A1A] border border-white/10 rounded-md px-4 py-4 text-white placeholder:text-white/50 focus:outline-none focus:border-green-500"
-            />
+            <ScrollAnimation animation="fade-up" delay={250}>
+              <input
+                type="text"
+                name="instagram"
+                value={formData.instagram}
+                onChange={handleInputChange}
+                placeholder="Instagram da empresa"
+                className="w-full bg-[#1A1A1A] border border-white/10 rounded-md px-4 py-4 text-white placeholder:text-white/50 focus:outline-none focus:border-green-500"
+              />
+            </ScrollAnimation>
           </div>
 
-          {/* Business Model - Updated with exact options from the image */}
-          <div className="relative">
+          <ScrollAnimation animation="fade-up" delay={300} className="relative">
             <select
               name="businessModel"
               value={formData.businessModel}
@@ -150,10 +146,9 @@ export default function ContactForm() {
               <option value="outro">Outro</option>
             </select>
             <ChevronDown className="absolute right-4 top-1/2 transform -translate-y-1/2 text-white/50 pointer-events-none w-5 h-5" />
-          </div>
+          </ScrollAnimation>
 
-          {/* Revenue - Updated with exact options from the image */}
-          <div className="relative">
+          <ScrollAnimation animation="fade-up" delay={350} className="relative">
             <select
               name="revenue"
               value={formData.revenue}
@@ -164,7 +159,7 @@ export default function ContactForm() {
               <option value="" disabled>
                 Qual é o seu faturamento mensal?
               </option>
-              <option value="ate-10-mil">Até 10 mil</option>
+
               <option value="11-20-mil">De 11 mil até 20 mil</option>
               <option value="21-30-mil">De 21 mil até 30 mil</option>
               <option value="31-50-mil">De 31 mil até 50 mil</option>
@@ -174,18 +169,19 @@ export default function ContactForm() {
               <option value="acima-500-mil">Acima de 500 mil</option>
             </select>
             <ChevronDown className="absolute right-4 top-1/2 transform -translate-y-1/2 text-white/50 pointer-events-none w-5 h-5" />
-          </div>
+          </ScrollAnimation>
 
-          {/* Submit Button - Changed to darker green with black text */}
-          <button
-            type="submit"
-            className={cn(
-              "w-full bg-green-600 hover:bg-green-700 text-black font-bold py-5 rounded-md transition-colors duration-300 mt-6",
-              "uppercase tracking-wider text-base",
-            )}
-          >
-            Receber mais informações
-          </button>
+          <ScrollAnimation animation="fade-up" delay={400}>
+            <button
+              type="submit"
+              className={cn(
+                "w-full bg-green-600 hover:bg-green-700 text-black font-bold py-5 rounded-md transition-colors duration-300 mt-6",
+                "uppercase tracking-wider text-base",
+              )}
+            >
+              Receber mais informações
+            </button>
+          </ScrollAnimation>
         </form>
       </div>
     </div>

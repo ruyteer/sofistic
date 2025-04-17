@@ -56,7 +56,6 @@
   animation-delay: 6s;
 }
 
-/* Scrollbar styling */
 ::-webkit-scrollbar {
   width: 6px;
 }
@@ -74,12 +73,10 @@
   background: rgba(16, 185, 129, 0.5);
 }
 
-/* Smooth scrolling */
 html {
   scroll-behavior: smooth;
 }
 
-/* Animated button border */
 @keyframes rotate-border {
   0% {
     stroke-dashoffset: 0;
@@ -89,7 +86,6 @@ html {
   }
 }
 
-/* Custom animations */
 @keyframes fade-in {
   from {
     opacity: 0;
@@ -141,7 +137,6 @@ html {
   }
 }
 
-/* Border animation */
 @keyframes border-rotate {
   0% {
     background-position: 0% 50%;
@@ -179,7 +174,6 @@ html {
   animation: grow-x 1.5s ease-in-out forwards;
 }
 
-/* Vibrant gradient text effects */
 .text-gradient-primary {
   background: linear-gradient(90deg, #c3ffab 0%, green 50%, white 100%);
   -webkit-background-clip: text;
@@ -216,7 +210,6 @@ html {
   }
 }
 
-/* Metallic text effect */
 .text-metallic {
   background: linear-gradient(90deg, #ffffff 0%, #f0f0f0 25%, #ffffff 50%, #e0e0e0 75%, #ffffff 100%);
   background-size: 200% auto;
@@ -227,7 +220,6 @@ html {
   text-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
 }
 
-/* Aceternity UI animations */
 @keyframes spotlight {
   0% {
     opacity: 0;
@@ -274,7 +266,6 @@ html {
   animation: shimmer 2s linear infinite;
 }
 
-/* Animated border for service cards */
 @keyframes border-fill {
   0% {
     width: 0;
@@ -362,4 +353,81 @@ html {
     left: auto;
     transform: translate(50%, -50%);
   }
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+@keyframes arrow-pulse {
+  0% {
+    opacity: 0.6;
+    transform: scale(0.95);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+  100% {
+    opacity: 0.6;
+    transform: scale(0.95);
+  }
+}
+
+.animate-arrow-pulse {
+  animation: arrow-pulse 2s ease-in-out infinite;
+}
+
+@keyframes arrow-glow {
+  0% {
+    opacity: 0.3;
+    filter: blur(3px);
+  }
+  50% {
+    opacity: 0.6;
+    filter: blur(4px);
+  }
+  100% {
+    opacity: 0.3;
+    filter: blur(3px);
+  }
+}
+
+.animate-arrow-glow {
+  animation: arrow-glow 2s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(10px);
+  }
+}
+
+@keyframes pulse-slow {
+  0%,
+  100% {
+    opacity: 0.3;
+    transform: scale(0.8);
+  }
+  50% {
+    opacity: 0.5;
+    transform: scale(1.2);
+  }
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+.animate-pulse-slow {
+  animation: pulse-slow 4s ease-in-out infinite;
 }

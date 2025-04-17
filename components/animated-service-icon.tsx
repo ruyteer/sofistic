@@ -13,7 +13,6 @@ export default function AnimatedServiceIcon({ icon }: AnimatedServiceIconProps) 
   const [particles, setParticles] = useState<{ x: number; y: number; size: number; delay: number }[]>([])
 
   useEffect(() => {
-    // Generate random particles
     const newParticles = []
     for (let i = 0; i < 10; i++) {
       newParticles.push({
@@ -28,7 +27,6 @@ export default function AnimatedServiceIcon({ icon }: AnimatedServiceIconProps) 
 
   return (
     <div className="relative">
-      {/* Animated background */}
       <motion.div
         className="absolute w-16 h-16 rounded-lg bg-gradient-to-br from-green-500/30 to-green-700/30"
         animate={{
@@ -42,7 +40,6 @@ export default function AnimatedServiceIcon({ icon }: AnimatedServiceIconProps) 
         }}
       />
 
-      {/* Particles */}
       {particles.map((particle, index) => (
         <motion.div
           key={index}
@@ -70,7 +67,6 @@ export default function AnimatedServiceIcon({ icon }: AnimatedServiceIconProps) 
         />
       ))}
 
-      {/* Icon container */}
       <motion.div
         className="w-16 h-16 bg-gradient-to-br from-green-500 to-green-700 rounded-lg flex items-center justify-center relative z-10"
         whileHover={{ scale: 1.1 }}

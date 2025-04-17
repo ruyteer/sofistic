@@ -71,12 +71,9 @@ export default function ProcessStepCard({
       />
 
       <div className="relative bg-black bg-opacity-70 backdrop-blur-sm border border-green-500/20 rounded-2xl p-6 overflow-hidden">
-        {/* Grid background */}
         <div className="absolute inset-0 bg-[url('/grid-pattern.svg')] opacity-20" />
 
-        {/* Content container */}
         <div className="relative z-10">
-          {/* Step number */}
           <div
             className={cn(
               "w-16 h-16 rounded-full flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300 mx-auto",
@@ -86,13 +83,11 @@ export default function ProcessStepCard({
             <span className="text-2xl font-bold text-white">{number}</span>
           </div>
 
-          {/* Content */}
           <h3 className="text-xl font-bold text-white text-center mb-4 group-hover:text-green-400 transition-colors duration-300">
             Passo {number}
           </h3>
           <p className="text-white/80 text-center leading-relaxed">{description}</p>
 
-          {/* Animated dots */}
           <div className="absolute -z-10 inset-0 overflow-hidden opacity-30">
             {Array.from({ length: 6 }).map((_, i) => (
               <div

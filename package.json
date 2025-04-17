@@ -59,8 +59,10 @@
     "vaul": "^0.9.6",
     "zod": "^3.24.1",
     "@emotion/is-prop-valid": "latest",
+    "aos": "latest",
     "framer-motion": "latest",
     "motion": "latest",
+    "react-intersection-observer": "latest",
     "@tabler/icons-react": "latest"
   },
   "devDependencies": {

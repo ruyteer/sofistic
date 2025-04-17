@@ -167,14 +167,6 @@ export default function AchievementShowcase() {
                 data-aos-delay={index * 100}
               >
                 <div className="relative h-full w-full">
-                  <div
-                    className={cn(
-                      "absolute -inset-1 bg-gradient-to-r blur-lg",
-                      isActive
-                        ? `${plaque.color} opacity-50`
-                        : "from-white/10 to-white/20 opacity-20"
-                    )}
-                  ></div>
                   <div className="relative overflow-hidden h-full">
                     <div className="w-full h-full relative">
                       <Image

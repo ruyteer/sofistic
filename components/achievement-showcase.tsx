@@ -1,11 +1,14 @@
 "use client";
 
+import type React from "react";
+
 import { useState, useEffect, useRef } from "react";
 import { useInView } from "react-intersection-observer";
 import { motion, useAnimation } from "framer-motion";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
 import { Trophy, Award } from "lucide-react";
+import { useMobile } from "@/hooks/use-mobile";
 
 interface AchievementPlaque {
   id: string;
@@ -22,6 +25,7 @@ export default function AchievementShowcase() {
   const carouselRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(containerRef, { once: false, amount: 0.3 })[0];
   const controls = useAnimation();
+  const isMobile = useMobile();
 
   const plaques: AchievementPlaque[] = [
     {
@@ -97,6 +101,18 @@ export default function AchievementShowcase() {
     scrollToActive();
   }, [activeIndex]);
 
+  const handleTouchStart = (e: React.TouchEvent) => {
+    if (isMobile) {
+      e.preventDefault();
+    }
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    if (isMobile) {
+      e.preventDefault();
+    }
+  };
+
   return (
     <div ref={containerRef} className="relative py-16 overflow-hidden">
       <motion.div
@@ -128,8 +144,13 @@ export default function AchievementShowcase() {
       >
         <div
           ref={carouselRef}
-          className="flex overflow-x-auto pb-8 snap-x snap-mandatory hide-scrollbar"
+          className={cn(
+            "flex pb-8 snap-x snap-mandatory hide-scrollbar",
+            isMobile ? "overflow-x-hidden" : "overflow-x-auto"
+          )}
           style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+          onTouchStart={handleTouchStart}
+          onTouchMove={handleTouchMove}
         >
           {plaques.map((plaque, index) => {
             const isActive = activeIndex === index;

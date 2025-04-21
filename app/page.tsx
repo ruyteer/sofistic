@@ -212,7 +212,7 @@ export default function LandingPage() {
               />
             </div>
             <h1 className="text-3xl md:text-4xl mt-6 lg:text-5xl font-bold mb-6 leading-tight">
-              Pois a evolução da sua <span className="text-gradient-primary">EMPRESA</span> começa agora!
+              Pois a evolução da sua <span className="text-gradient-primary">Empresa</span> começa agora!
             </h1>
           </ScrollAnimation>
 
@@ -245,7 +245,10 @@ export default function LandingPage() {
         <div className="relative z-10 text-center max-w-3xl mx-auto mb-32">
           <ScrollAnimation animation="fade-up" className="mb-8">
             <p className="text-xl md:text-2xl text-white/90">
-              Aprenda a criar um plano estratégico sólido para escalar seu negócio com eficiência e consistência.
+              Transforme sua <span className="text-gradient-primary">Empresa</span> em uma máquina de imprimir dinheiro
+              com <span className="text-gradient-primary">Automações</span> e{" "}
+              <span className="text-gradient-primary">Estratégias</span> validadas juntamente com nossa{" "}
+              <span className="text-gradient-primary">Gestão Inteligente</span> para negócios.
             </p>
           </ScrollAnimation>
 

@@ -3,11 +3,52 @@
 import type React from "react"
 
 import { useState } from "react"
-import { ChevronDown, ClipboardList, Phone } from "lucide-react"
+import { useRouter } from "next/navigation"
+import { ChevronDown, ClipboardList, Phone, Loader2 } from "lucide-react"
 import { cn } from "@/lib/utils"
 import ScrollAnimation from "@/components/scroll-animation"
 
+// Define option types with both value and label
+interface SelectOption {
+  value: string
+  label: string
+}
+
 export default function ContactForm() {
+  const router = useRouter()
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [error, setError] = useState<string | null>(null)
+
+  // Define options with both value and display text
+  const businessModelOptions: SelectOption[] = [
+    { value: "servicos", label: "Serviços" },
+    { value: "varejo-comercio", label: "Varejo / Comércio" },
+    { value: "e-commerce", label: "E-commerce" },
+    { value: "alimentacao-food-service", label: "Alimentação / Food Service" },
+    { value: "educacao", label: "Educação" },
+    { value: "imobiliario-construcao", label: "Imobiliário / Construção" },
+    { value: "saude-estetica", label: "Saúde / Estética" },
+    { value: "tecnologia-startups", label: "Tecnologia / Startups (inclui SaaS)" },
+    { value: "financas-contabilidade", label: "Finanças / Contabilidade" },
+    { value: "energia-sustentabilidade", label: "Energia / Sustentabilidade" },
+    { value: "turismo-hotelaria", label: "Turismo / Hotelaria" },
+    { value: "agro-rural", label: "Agro / Rural" },
+    { value: "transporte-logistica", label: "Transporte / Logística" },
+    { value: "ong-terceiro-setor", label: "ONG / Terceiro Setor" },
+    { value: "outro", label: "Outro" },
+  ]
+
+  const revenueOptions: SelectOption[] = [
+    { value: "11-20-mil", label: "De 11 mil até 20 mil" },
+    { value: "21-30-mil", label: "De 21 mil até 30 mil" },
+    { value: "31-50-mil", label: "De 31 mil até 50 mil" },
+    { value: "51-80-mil", label: "De 51 mil até 80 mil" },
+    { value: "81-150-mil", label: "De 81 mil até 150 mil" },
+    { value: "151-300-mil", label: "De 151 mil até 300 mil" },
+    { value: "acima-500-mil", label: "Acima de 500 mil" },
+  ]
+
+  // Form data with values
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -17,15 +58,56 @@ export default function ContactForm() {
     revenue: "",
   })
 
+  // Track the selected options for display text
+  const [selectedBusinessModel, setSelectedBusinessModel] = useState<SelectOption | null>(null)
+  const [selectedRevenue, setSelectedRevenue] = useState<SelectOption | null>(null)
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target
     setFormData((prev) => ({ ...prev, [name]: value }))
+
+    // Update selected options for select fields
+    if (name === "businessModel") {
+      const option = businessModelOptions.find((opt) => opt.value === value)
+      setSelectedBusinessModel(option || null)
+    } else if (name === "revenue") {
+      const option = revenueOptions.find((opt) => opt.value === value)
+      setSelectedRevenue(option || null)
+    }
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    console.log("Form submitted:", formData)
-    alert("Formulário enviado com sucesso! Entraremos em contato em breve.")
+    setIsSubmitting(true)
+    setError(null)
+
+    try {
+      // Create submission data with display text for select fields
+      const submissionData = {
+        ...formData,
+        businessModel: selectedBusinessModel?.label || formData.businessModel,
+        revenue: selectedRevenue?.label || formData.revenue,
+      }
+
+      const response = await fetch("https://webhook.sofisticmidia.com/webhook/9423832a-9200-4e17-875c-4e4adc01aae5", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(submissionData),
+      })
+
+      if (!response.ok) {
+        throw new Error("Falha ao enviar o formulário. Por favor, tente novamente.")
+      }
+
+      // Redirect to thank you page
+      router.push("/obrigado")
+    } catch (err) {
+      console.error("Error submitting form:", err)
+      setError(err instanceof Error ? err.message : "Ocorreu um erro ao enviar o formulário")
+      setIsSubmitting(false)
+    }
   }
 
   return (
@@ -77,6 +159,7 @@ export default function ContactForm() {
                 placeholder="Seu nome"
                 className="w-full bg-[#1A1A1A] border border-white/10 rounded-md px-4 py-4 text-white placeholder:text-white/50 focus:outline-none focus:border-green-500"
                 required
+                disabled={isSubmitting}
               />
             </ScrollAnimation>
 
@@ -89,6 +172,7 @@ export default function ContactForm() {
                 placeholder="Seu melhor e-mail"
                 className="w-full bg-[#1A1A1A] border border-white/10 rounded-md px-4 py-4 text-white placeholder:text-white/50 focus:outline-none focus:border-green-500"
                 required
+                disabled={isSubmitting}
               />
             </ScrollAnimation>
           </div>
@@ -103,6 +187,7 @@ export default function ContactForm() {
                 placeholder="Seu Whatsapp"
                 className="w-full bg-[#1A1A1A] border border-white/10 rounded-md px-4 py-4 text-white placeholder:text-white/50 focus:outline-none focus:border-green-500"
                 required
+                disabled={isSubmitting}
               />
             </ScrollAnimation>
 
@@ -114,6 +199,7 @@ export default function ContactForm() {
                 onChange={handleInputChange}
                 placeholder="Instagram da empresa"
                 className="w-full bg-[#1A1A1A] border border-white/10 rounded-md px-4 py-4 text-white placeholder:text-white/50 focus:outline-none focus:border-green-500"
+                disabled={isSubmitting}
               />
             </ScrollAnimation>
           </div>
@@ -125,25 +211,16 @@ export default function ContactForm() {
               onChange={handleInputChange}
               className="w-full bg-[#1A1A1A] border border-white/10 rounded-md px-4 py-4 text-white appearance-none focus:outline-none focus:border-green-500"
               required
+              disabled={isSubmitting}
             >
               <option value="" disabled>
                 Qual é o seu modelo de negócio?
               </option>
-              <option value="servicos">Serviços</option>
-              <option value="varejo-comercio">Varejo / Comércio</option>
-              <option value="e-commerce">E-commerce</option>
-              <option value="alimentacao-food-service">Alimentação / Food Service</option>
-              <option value="educacao">Educação</option>
-              <option value="imobiliario-construcao">Imobiliário / Construção</option>
-              <option value="saude-estetica">Saúde / Estética</option>
-              <option value="tecnologia-startups">Tecnologia / Startups (inclui SaaS)</option>
-              <option value="financas-contabilidade">Finanças / Contabilidade</option>
-              <option value="energia-sustentabilidade">Energia / Sustentabilidade</option>
-              <option value="turismo-hotelaria">Turismo / Hotelaria</option>
-              <option value="agro-rural">Agro / Rural</option>
-              <option value="transporte-logistica">Transporte / Logística</option>
-              <option value="ong-terceiro-setor">ONG / Terceiro Setor</option>
-              <option value="outro">Outro</option>
+              {businessModelOptions.map((option) => (
+                <option key={option.value} value={option.value}>
+                  {option.label}
+                </option>
+              ))}
             </select>
             <ChevronDown className="absolute right-4 top-1/2 transform -translate-y-1/2 text-white/50 pointer-events-none w-5 h-5" />
           </ScrollAnimation>
@@ -155,31 +232,41 @@ export default function ContactForm() {
               onChange={handleInputChange}
               className="w-full bg-[#1A1A1A] border border-white/10 rounded-md px-4 py-4 text-white appearance-none focus:outline-none focus:border-green-500"
               required
+              disabled={isSubmitting}
             >
               <option value="" disabled>
                 Qual é o seu faturamento mensal?
               </option>
-
-              <option value="11-20-mil">De 11 mil até 20 mil</option>
-              <option value="21-30-mil">De 21 mil até 30 mil</option>
-              <option value="31-50-mil">De 31 mil até 50 mil</option>
-              <option value="51-80-mil">De 51 mil até 80 mil</option>
-              <option value="81-150-mil">De 81 mil até 150 mil</option>
-              <option value="151-300-mil">De 151 mil até 300 mil</option>
-              <option value="acima-500-mil">Acima de 500 mil</option>
+              {revenueOptions.map((option) => (
+                <option key={option.value} value={option.value}>
+                  {option.label}
+                </option>
+              ))}
             </select>
             <ChevronDown className="absolute right-4 top-1/2 transform -translate-y-1/2 text-white/50 pointer-events-none w-5 h-5" />
           </ScrollAnimation>
 
+          {error && (
+            <div className="bg-red-500/10 border border-red-500/30 text-red-400 p-3 rounded-md text-sm">{error}</div>
+          )}
+
           <ScrollAnimation animation="fade-up" delay={400}>
             <button
               type="submit"
+              disabled={isSubmitting}
               className={cn(
-                "w-full bg-green-600 hover:bg-green-700 text-black font-bold py-5 rounded-md transition-colors duration-300 mt-6",
-                "uppercase tracking-wider text-base",
+                "w-full bg-green-600 hover:bg-green-700 text-white font-bold py-5 rounded-md transition-colors duration-300 mt-6",
+                "uppercase tracking-wider text-base flex items-center justify-center",
+                isSubmitting ? "opacity-70 cursor-not-allowed" : "",
               )}
             >
-              Receber mais informações
+              {isSubmitting ? (
+                <>
+                  <Loader2 className="w-5 h-5 mr-2 animate-spin" /> Enviando...
+                </>
+              ) : (
+                "Receber mais informações"
+              )}
             </button>
           </ScrollAnimation>
         </form>

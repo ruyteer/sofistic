@@ -39,6 +39,7 @@ export default function ContactForm() {
   ]
 
   const revenueOptions: SelectOption[] = [
+    { value: "ate-10-mil", label: "Até 10 mil" },
     { value: "11-20-mil", label: "De 11 mil até 20 mil" },
     { value: "21-30-mil", label: "De 21 mil até 30 mil" },
     { value: "31-50-mil", label: "De 31 mil até 50 mil" },

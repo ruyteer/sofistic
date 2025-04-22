@@ -242,8 +242,8 @@ export default function LandingPage() {
       </section>
 
       <section id="serviços" className="relative z-10 pt-40 pb-20 px-6 md:px-10 lg:px-20">
-        <div className="relative z-10 text-center max-w-3xl mx-auto mb-32">
-          <ScrollAnimation animation="fade-up" className="mb-8">
+        <div className="relative z-10 text-center max-w-3xl mx-auto mb-16">
+          <ScrollAnimation animation="fade-up" className="mb-4">
             <p className="text-xl md:text-2xl text-white/90">
               Transforme sua <span className="text-gradient-primary">Empresa</span> em uma máquina de imprimir dinheiro
               com <span className="text-gradient-primary">Automações</span> e{" "}

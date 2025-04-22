@@ -1,7 +1,5 @@
 "use client"
 
-import type React from "react"
-
 import { useState, useEffect, useRef } from "react"
 import { useInView } from "react-intersection-observer"
 import { motion, useAnimation } from "framer-motion"
@@ -99,17 +97,9 @@ export default function AchievementShowcase() {
     scrollToActive()
   }, [activeIndex])
 
-  const handleTouchStart = (e: React.TouchEvent) => {
-    if (isMobile) {
-      e.preventDefault()
-    }
-  }
-
-  const handleTouchMove = (e: React.TouchEvent) => {
-    if (isMobile) {
-      e.preventDefault()
-    }
-  }
+  // Replace with empty handlers that don't prevent default behavior
+  const handleTouchStart = () => {}
+  const handleTouchMove = () => {}
 
   return (
     <div ref={containerRef} className="relative py-16 overflow-hidden">
@@ -138,7 +128,10 @@ export default function AchievementShowcase() {
       <div className="max-w-5xl mx-auto px-4 relative" data-aos="fade-up" data-aos-delay="200">
         <div
           ref={carouselRef}
-          className="flex overflow-x-auto pb-8 snap-x snap-mandatory hide-scrollbar justify-center"
+          className={cn(
+            "flex pb-8 snap-x snap-mandatory hide-scrollbar",
+            isMobile ? "overflow-x-auto justify-start gap-4 px-2" : "overflow-x-auto justify-center",
+          )}
           style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
           onTouchStart={handleTouchStart}
           onTouchMove={handleTouchMove}
@@ -151,9 +144,9 @@ export default function AchievementShowcase() {
                 key={plaque.id}
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{
-                  opacity: isActive ? 1 : 0.7,
-                  scale: isActive ? 1 : 0.8,
-                  filter: isActive ? "blur(0px)" : "blur(1px)",
+                  opacity: isMobile ? 1 : isActive ? 1 : 0.7,
+                  scale: isMobile ? 0.9 : isActive ? 1 : 0.8,
+                  filter: isMobile ? "blur(0px)" : isActive ? "blur(0px)" : "blur(1px)",
                   transition: { duration: 0.3, ease: "easeInOut" },
                 }}
                 whileHover={{
@@ -172,14 +165,13 @@ export default function AchievementShowcase() {
                   setActiveIndex(index)
                 }}
                 style={{
-                  width: isActive ? "220px" : "180px",
-                  height: isActive ? "330px" : "270px",
+                  width: isMobile ? "180px" : isActive ? "220px" : "180px",
+                  height: isMobile ? "270px" : isActive ? "330px" : "270px",
                 }}
                 data-aos="zoom-in"
                 data-aos-delay={index * 100}
               >
                 <div className="relative h-full w-full">
-                 
                   <div className="relative overflow-hidden h-full">
                     <div className="w-full h-full relative">
                       <Image
@@ -200,7 +192,12 @@ export default function AchievementShowcase() {
           })}
         </div>
 
-        <div className="flex justify-between absolute top-1/2 left-0 right-0 transform -translate-y-1/2 px-2 md:px-0 pointer-events-none">
+        <div
+          className={cn(
+            "flex justify-between absolute top-1/2 left-0 right-0 transform -translate-y-1/2 px-2 md:px-0 pointer-events-none",
+            isMobile ? "hidden" : "block",
+          )}
+        >
           <button
             onClick={() => {
               setIsAutoPlaying(false)
@@ -224,7 +221,7 @@ export default function AchievementShowcase() {
               setIsAutoPlaying(false)
               setActiveIndex((prev) => (prev === plaques.length - 1 ? 0 : prev + 1))
             }}
-            className="w-10 h-10 rounded-full bg-black/50 flex items-center justify-center text-white border border-white/20 pointer-events-auto hover:bg-black/80 transition-colors md:-mr-5 lg:-mr-12"
+            className="w-10 h-10 rounded-full bg-black/50 flex items-center justify-center text-white border border-white/20 pointer-events-auto hover:bg-black/80 transition-colors md:-mr-5 lg:-ml-12"
             aria-label="Próxima placa"
           >
             <svg

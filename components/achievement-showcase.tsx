@@ -29,28 +29,28 @@ export default function AchievementShowcase() {
     {
       id: "10k",
       title: "10 MIL",
-      description: "Faturados para nossos clientes",
+      description: "Faturados Com Nossa Assessoria",
       imageSrc: "/images/placa-10k.png",
       color: "from-gray-500/30 to-gray-700/30",
     },
     {
       id: "100k",
       title: "100 MIL",
-      description: "Faturados para nossos clientes",
+      description: "Faturados Com Nossa Assessoria",
       imageSrc: "/images/placa-100k.png",
       color: "from-green-500/30 to-green-700/30",
     },
     {
       id: "1m",
       title: "1 MILHÃO",
-      description: "Faturados para nossos clientes",
+      description: "Faturados Com Nossa Assessoria",
       imageSrc: "/images/placa-1m.png",
       color: "from-gray-500/30 to-gray-700/30",
     },
     {
       id: "5m",
       title: "5 MILHÕES",
-      description: "Faturados para nossos clientes",
+      description: "Faturados Com Nossa Assessoria",
       imageSrc: "/images/placa-5m.jpeg",
       color: "from-red-500/30 to-red-700/30",
     },
@@ -116,13 +116,11 @@ export default function AchievementShowcase() {
         <div className="flex items-center justify-center gap-3 mb-4">
           <Trophy className="w-8 h-8 text-green-500" />
           <h2 className="text-4xl md:text-5xl font-bold">
-            Nossas <span className="text-gradient-primary">Conquistas</span>
+            Celebramos Seus <span className="text-gradient-primary">Marcos de Faturamento</span> Conosco
           </h2>
           <Trophy className="w-8 h-8 text-green-500" />
         </div>
-        <p className="text-lg text-white/70 max-w-2xl mx-auto">
-          Celebrando marcos importantes que alcançamos junto aos nossos clientes
-        </p>
+        <p className="text-lg text-white/70 max-w-2xl mx-auto">Celebramos Seus Marcos de Faturamento Conosco.</p>
       </motion.div>
 
       <div className="max-w-5xl mx-auto px-4 relative" data-aos="fade-up" data-aos-delay="200">

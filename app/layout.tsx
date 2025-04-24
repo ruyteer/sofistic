@@ -3,12 +3,12 @@ import "@/app/globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
 
 export const metadata = {
-  title: "Sofistic Midia - Impulsione o crescimento da sua empresa",
+  title: "Sofistic Midia",
   description: "Atraia mais clientes, otimize processos e escale sua operação online com a Sofistic Midia.",
   icons: {
-    icon: "/images/logo.png",
-    shortcut: "/images/logo.png",
-    apple: "/images/logo.png",
+    icon: "/images/favicon.png",
+    shortcut: "/images/favicon.png",
+    apple: "/images/favicon.png",
   },
     generator: 'v0.dev'
 }

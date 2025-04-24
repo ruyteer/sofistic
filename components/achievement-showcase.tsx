@@ -116,11 +116,11 @@ export default function AchievementShowcase() {
         <div className="flex items-center justify-center gap-3 mb-4">
           <Trophy className="w-8 h-8 text-green-500" />
           <h2 className="text-4xl md:text-5xl font-bold">
-            Celebramos Seus <span className="text-gradient-primary">Marcos de Faturamento</span> Conosco
+          Marcos de <span className="text-gradient-primary">Faturamento</span>
           </h2>
           <Trophy className="w-8 h-8 text-green-500" />
         </div>
-        <p className="text-lg text-white/70 max-w-2xl mx-auto">Celebramos Seus Marcos de Faturamento Conosco.</p>
+        <p className="text-lg text-white/70 max-w-2xl mx-auto">Celebramos Seus <span className="text-gradient-primary">Marcos de Faturamento</span> Conosco.</p>
       </motion.div>
 
       <div className="max-w-5xl mx-auto px-4 relative" data-aos="fade-up" data-aos-delay="200">

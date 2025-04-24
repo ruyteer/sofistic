@@ -192,50 +192,6 @@ export default function AchievementShowcase() {
           })}
         </div>
 
-        <div
-          className={cn(
-            "flex justify-between absolute top-1/2 left-0 right-0 transform -translate-y-1/2 px-2 md:px-0 pointer-events-none",
-            isMobile ? "hidden" : "block",
-          )}
-        >
-          <button
-            onClick={() => {
-              setIsAutoPlaying(false)
-              setActiveIndex((prev) => (prev === 0 ? plaques.length - 1 : prev - 1))
-            }}
-            className="w-10 h-10 rounded-full bg-black/50 flex items-center justify-center text-white border border-white/20 pointer-events-auto hover:bg-black/80 transition-colors md:-ml-5 lg:-ml-12"
-            aria-label="Placa anterior"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-6 w-6"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-            </svg>
-          </button>
-          <button
-            onClick={() => {
-              setIsAutoPlaying(false)
-              setActiveIndex((prev) => (prev === plaques.length - 1 ? 0 : prev + 1))
-            }}
-            className="w-10 h-10 rounded-full bg-black/50 flex items-center justify-center text-white border border-white/20 pointer-events-auto hover:bg-black/80 transition-colors md:-mr-5 lg:-ml-12"
-            aria-label="Próxima placa"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-6 w-6"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-            </svg>
-          </button>
-        </div>
-
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{

@@ -241,7 +241,7 @@ export default function LandingPage() {
         </ScrollAnimation>
       </section>
 
-      <section id="serviços" className="relative z-10 pt-40 pb-20 px-6 md:px-10 lg:px-20">
+      <section id="serviços" className="relative z-10  pb-20 px-6 md:px-10 lg:px-20">
         <div className="relative z-10 text-center max-w-3xl mx-auto mb-16">
           <ScrollAnimation animation="fade-up" className="mb-4">
             <p className="text-xl md:text-2xl text-white/90">
